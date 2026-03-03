@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Dashboard - Flashgamez Electronics</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --neon: #00e5ff;
+    --neon2: #ff6b00;
+    --dark: #080c14;
+    --card: #0d1420;
+    --border: #1a2540;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--dark); color: #e8edf5; font-family: 'Outfit', sans-serif; overflow-x: hidden; min-height: 100vh; }
+  .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 3px; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.4;
+  }
+
+  /* Auth gate shown before dashboard */
+  #authGate { position:fixed; inset:0; background:var(--dark); z-index:900; display:flex; align-items:center; justify-content:center; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    transition: all 0.3s;
+  }
+
+  .input-field {
+    width: 100%;
+    background: rgba(13,20,32,0.5);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 12px 16px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .input-field:focus { border-color: var(--neon); background: rgba(13,20,32,0.8); }
+  .input-field::placeholder { color: #556677; }
+  textarea.input-field { resize: vertical; min-height: 100px; }
+  select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2300e5ff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px;
+  }
+  select.input-field option { background: var(--card); color: white; }
+
+  .btn-primary {
+    background: var(--neon); color: var(--dark);
+    padding: 12px 28px; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; font-size: 13px; cursor: pointer; border: none;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-primary:hover { background: #00d4e6; box-shadow: 0 0 25px rgba(0,229,255,0.4); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    background: transparent; border: 1.5px solid var(--neon); color: var(--neon);
+    padding: 10px 24px; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; font-size: 13px; cursor: pointer; transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    text-decoration: none; display: inline-block; text-align: center;
+  }
+  .btn-secondary:hover { background: rgba(0,229,255,0.1); }
+
+  .btn-danger {
+    background: transparent; border: 1.5px solid #ef4444; color: #ef4444;
+    padding: 8px 16px; font-weight: 600; font-size: 12px; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-danger:hover { background: rgba(239,68,68,0.1); }
+  .btn-small { padding: 6px 14px; font-size: 11px; }
+
+  .btn-logout {
+    background: transparent; border: 1px solid #334455; color: #8899bb;
+    padding: 8px 16px; font-size: 12px; cursor: pointer; transition: all 0.3s;
+    width: 100%; text-align: left; display: flex; align-items: center; gap: 8px;
+    border-radius: 6px;
+  }
+  .btn-logout:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.05); }
+
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 20px; border-radius: 8px; transition: all 0.3s;
+  }
+  .stat-card:hover { border-color: var(--neon); transform: translateY(-2px); }
+
+  .product-item {
+    background: rgba(13,20,32,0.5); border: 1px solid var(--border);
+    padding: 16px; border-radius: 8px; display: flex; gap: 16px;
+    align-items: start; transition: all 0.3s;
+  }
+  .product-item:hover { border-color: var(--neon); }
+
+  .product-thumb { width: 80px; height: 80px; object-fit: cover; border: 1px solid var(--border); border-radius: 4px; flex-shrink: 0; }
+
+  .badge { display: inline-block; padding: 4px 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 12px; }
+  .badge-success { background: rgba(34,197,94,0.2); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .badge-info { background: rgba(0,229,255,0.2); color: var(--neon); border: 1px solid rgba(0,229,255,0.3); }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+    background: var(--card); border: 1px solid var(--neon); color: white;
+    padding: 16px 24px; border-radius: 8px; font-size: 14px;
+    transform: translateX(400px); transition: transform 0.4s;
+    box-shadow: 0 8px 32px rgba(0,229,255,0.2);
+  }
+  .toast.show { transform: translateX(0); }
+  .toast.error { border-color: #ef4444; box-shadow: 0 8px 32px rgba(239,68,68,0.2); }
+
+  .sidebar {
+    position: fixed; left: 0; top: 0; width: 260px; height: 100vh;
+    background: var(--card); border-right: 1px solid var(--border);
+    padding: 24px; z-index: 100; display: flex; flex-direction: column;
+  }
+
+  .sidebar-link {
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    color: #8899bb; text-decoration: none; border-radius: 6px;
+    transition: all 0.3s; margin-bottom: 4px; font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+  }
+  .sidebar-link:hover { background: rgba(0,229,255,0.1); color: var(--neon); }
+  .sidebar-link.active { background: rgba(0,229,255,0.15); color: var(--neon); border-left: 3px solid var(--neon); padding-left: 13px; }
+
+  .main-content { margin-left: 260px; padding: 40px; min-height: 100vh; }
+
+  .upload-label {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; width: 100%; padding: 32px 20px; border: 2px dashed var(--border);
+    border-radius: 8px; cursor: pointer; transition: all 0.3s;
+    background: rgba(13,20,32,0.3); text-align: center;
+  }
+  .upload-label:hover { border-color: var(--neon); background: rgba(0,229,255,0.05); }
+  .upload-text { font-size: 14px; color: #8899bb; font-weight: 500; }
+  .upload-subtext { font-size: 12px; color: #445566; }
+
+  .image-preview { width: 100%; height: 200px; object-fit: cover; border: 1px solid var(--border); border-radius: 4px; margin-top: 8px; }
+  .preview-container { position: relative; margin-top: 10px; }
+  .remove-img-btn {
+    position: absolute; top: 16px; right: 8px; background: rgba(239,68,68,0.9);
+    color: white; border: none; border-radius: 4px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .remove-img-btn:hover { background: #ef4444; }
+
+  .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+  .progress-fill { height: 100%; background: var(--neon); width: 0%; transition: width 0.3s; border-radius: 2px; }
+
+  .spec-item { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+
+  .mobile-menu-btn {
+    position: fixed; top: 20px; left: 20px; z-index: 200;
+    width: 44px; height: 44px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; display: none; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .mobile-menu-btn:hover { border-color: var(--neon); }
+  .mobile-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 99; display: none; }
+  .mobile-overlay.show { display: block; }
+
+  .skeleton { background: linear-gradient(90deg, var(--card) 25%, #131d2e 50%, var(--card) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  @media(max-width: 968px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s; z-index: 150; }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; padding: 20px; padding-top: 70px; }
+    .mobile-menu-btn { display: flex; }
+  }
+  @media(max-width: 480px) {
+    .main-content { padding: 16px; padding-top: 70px; }
+    .toast { left: 16px; right: 16px; bottom: 16px; transform: translateY(200px); }
+    .toast.show { transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH GATE (shown while checking login) -->
+<div id="authGate">
+  <div class="text-center">
+    <div class="w-12 h-12 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-4" style="border-color:var(--neon);border-top-color:transparent"></div>
+    <p class="text-gray-500 text-sm">Verifying access...</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+  <svg width="24" height="24" fill="none" stroke="var(--neon)" stroke-width="2" viewBox="0 0 24 24">
+    <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+  </svg>
+</button>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="mb-8">
+    <div class="flex items-center gap-3 mb-2">
+      <div class="w-8 h-8 relative">
+        <div class="absolute inset-0" style="background:var(--neon);clip-path:polygon(50% 10%,90% 30%,90% 70%,50% 90%,10% 70%,10% 30%)"></div>
+      </div>
+      <div>
+        <div class="bebas text-white text-sm tracking-widest">FLASHGAMEZ</div>
+        <div class="text-xs text-gray-500">ADMIN PANEL</div>
+      </div>
+    </div>
+    <div id="adminEmailDisplay" class="text-xs text-gray-600 mt-2 pl-1"></div>
+  </div>
+
+  <nav class="flex-1">
+    <button class="sidebar-link active" id="nav-dashboard" onclick="showSection('dashboard')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+    <button class="sidebar-link" id="nav-products" onclick="showSection('products')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      All Products
+    </button>
+    <button class="sidebar-link" id="nav-add-product" onclick="showSection('add-product')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Product
+    </button>
+  </nav>
+
+  <div class="mt-auto pt-4 space-y-2">
+    <a href="index.html" target="_blank" class="btn-secondary w-full text-center block text-xs py-2">View Store</a>
+    <button class="btn-logout" onclick="doLogout()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Logout
+    </button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="mainContent" style="display:none">
+
+  <!-- Dashboard -->
+  <section id="dashboard-section">
+    <div class="mb-8">
+      <h1 class="bebas text-5xl text-white mb-2">DASHBOARD</h1>
+      <p class="text-gray-500">Manage your Flashgamez Electronics store</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="stat-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-500 text-sm uppercase tracking-wider">Total Products</span>
+          <svg width="24" height="24" fill="none" stroke="var(--neon)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+        </div>
+        <div class="bebas text-4xl" style="color:var(--neon)" id="totalProducts">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-500 text-sm uppercase tracking-wider">Categories</span>
+          <svg width="24" height="24" fill="none" stroke="var(--neon2)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="bebas text-4xl" style="color:var(--neon2)">8</div>
+      </div>
+      <div class="stat-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-500 text-sm uppercase tracking-wider">Status</span>
+          <svg width="24" height="24" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="bebas text-4xl text-green-400">LIVE</div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-white mb-4 uppercase tracking-wider">Quick Actions</h2>
+      <div class="flex flex-wrap gap-4">
+        <button onclick="showSection('add-product')" class="btn-primary">Add New Product</button>
+        <button onclick="showSection('products')" class="btn-secondary">View All Products</button>
+        <a href="index.html" target="_blank" class="btn-secondary">Preview Store</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- All Products -->
+  <section id="products-section" style="display:none">
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h1 class="bebas text-5xl text-white mb-2">ALL PRODUCTS</h1>
+        <p class="text-gray-500">Manage your product listings</p>
+      </div>
+      <button onclick="loadProducts()" class="btn-secondary btn-small">↻ Refresh</button>
+    </div>
+    <div class="space-y-4" id="productsList">
+      <div class="text-center py-12 text-gray-600">
+        <div class="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-4" style="border-color:var(--neon);border-top-color:transparent"></div>
+        <p>Loading products...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add Product -->
+  <section id="add-product-section" style="display:none">
+    <div class="mb-8">
+      <h1 class="bebas text-5xl text-white mb-2">ADD NEW PRODUCT</h1>
+      <p class="text-gray-500">Fill in the details to add a product to your store</p>
+    </div>
+
+    <div class="space-y-6" id="productForm">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card p-6">
+          <label class="block text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Product Name *</label>
+          <input type="text" id="f-name" class="input-field" placeholder="e.g., Apple iPhone 15 Pro Max" />
+        </div>
+        <div class="card p-6">
+          <label class="block text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Category *</label>
+          <select id="f-category" class="input-field">
+            <option value="">Select a category</option>
+            <option value="smartphones">Smartphones</option>
+            <option value="tvs">Smart TVs</option>
+            <option value="laptops">Laptops</option>
+            <option value="audio">Audio</option>
+            <option value="cameras">Cameras</option>
+            <option value="networking">Networking</option>
+            <option value="mining">Crypto Mining</option>
+            <option value="outdoor">Outdoor & More</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <label class="block text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Brand / Badge *</label>
+        <input type="text" id="f-badge" class="input-field" placeholder="e.g., Apple, Samsung, Sony" />
+      </div>
+
+      <div class="card p-6">
+        <label class="block text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Description *</label>
+        <textarea id="f-description" class="input-field" placeholder="Write a compelling product description..."></textarea>
+      </div>
+
+      <!-- Images -->
+      <div class="card p-6">
+        <label class="block text-sm font-semibold text-gray-400 uppercase tracking-wider mb-1">Product Images *</label>
+        <p class="text-xs text-gray-500 mb-6">Upload up to 3 images. First image is required. Images are stored in Appwrite Storage.</p>
+        <div class="space-y-6" id="imageInputs">
+
+          <div>
+            <p class="text-xs text-gray-400 mb-2 uppercase tracking-wider">Image 1 <span class="text-red-400">*</span></p>
+            <label class="upload-label" id="upload-label-0"
+              ondragover="event.preventDefault();this.classList.add('border-cyan-400')"
+              ondragleave="this.classList.remove('border-cyan-400')"
+              ondrop="handleDrop(event,0)">
+              <svg width="32" height="32" fill="none" stroke="var(--neon)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span class="upload-text">Click to upload or drag & drop</span>
+              <span class="upload-subtext">PNG, JPG, WEBP up to 5MB</span>
+              <input type="file" accept="image/*" style="display:none" onchange="handleImageSelect(this,0)" />
+            </label>
+            <div id="preview-container-0" style="display:none" class="preview-container">
+              <img id="preview-0" class="image-preview" />
+              <button type="button" onclick="removeImage(0)" class="remove-img-btn">✕ Remove</button>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-xs text-gray-400 mb-2 uppercase tracking-wider">Image 2 <span class="text-gray-600">(optional)</span></p>
+            <label class="upload-label" id="upload-label-1"
+              ondragover="event.preventDefault();this.classList.add('border-cyan-400')"
+              ondragleave="this.classList.remove('border-cyan-400')"
+              ondrop="handleDrop(event,1)">
+              <svg width="32" height="32" fill="none" stroke="var(--neon)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span class="upload-text">Click to upload or drag & drop</span>
+              <span class="upload-subtext">PNG, JPG, WEBP up to 5MB</span>
+              <input type="file" accept="image/*" style="display:none" onchange="handleImageSelect(this,1)" />
+            </label>
+            <div id="preview-container-1" style="display:none" class="preview-container">
+              <img id="preview-1" class="image-preview" />
+              <button type="button" onclick="removeImage(1)" class="remove-img-btn">✕ Remove</button>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-xs text-gray-400 mb-2 uppercase tracking-wider">Image 3 <span class="text-gray-600">(optional)</span></p>
+            <label class="upload-label" id="upload-label-2"
+              ondragover="event.preventDefault();this.classList.add('border-cyan-400')"
+              ondragleave="this.classList.remove('border-cyan-400')"
+              ondrop="handleDrop(event,2)">
+              <svg width="32" height="32" fill="none" stroke="var(--neon)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span class="upload-text">Click to upload or drag & drop</span>
+              <span class="upload-subtext">PNG, JPG, WEBP up to 5MB</span>
+              <input type="file" accept="image/*" style="display:none" onchange="handleImageSelect(this,2)" />
+            </label>
+            <div id="preview-container-2" style="display:none" class="preview-container">
+              <img id="preview-2" class="image-preview" />
+              <button type="button" onclick="removeImage(2)" class="remove-img-btn">✕ Remove</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Specs -->
+      <div class="card p-6">
+        <label class="block text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Key Specifications</label>
+        <p class="text-xs text-gray-500 mb-4">Add key specs (e.g., "128GB Storage", "5G Ready")</p>
+        <div id="specsContainer">
+          <div class="spec-item"><input type="text" class="input-field spec-input" placeholder="Spec 1" /></div>
+          <div class="spec-item"><input type="text" class="input-field spec-input" placeholder="Spec 2" /></div>
+          <div class="spec-item"><input type="text" class="input-field spec-input" placeholder="Spec 3" /></div>
+        </div>
+        <button type="button" onclick="addSpecField()" class="btn-secondary btn-small mt-3">+ Add More Specs</button>
+      </div>
+
+      <!-- Upload Progress -->
+      <div id="uploadProgress" style="display:none" class="card p-4">
+        <p class="text-sm text-gray-400 mb-2" id="uploadStatus">Uploading images...</p>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <div class="flex gap-4 flex-wrap">
+        <button onclick="submitProduct()" class="btn-primary" id="submitBtn">Add Product to Store</button>
+        <button onclick="resetForm()" class="btn-secondary">Reset Form</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- APPWRITE SDK -->
+<script type="module">
+  import { Client, Databases, Storage, Account, Query, ID } from 'https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm';
+
+  // ===== APPWRITE CONFIG =====
+  const PROJECT_ID = '69a6c445003bd2ba2780';
+  const DATABASE_ID = '69a6c56e0000b39cf73f';
+  const COLLECTION_ID = 'products';
+  const BUCKET_ID = '69a6c72d000a12baf2e4';
+  const ENDPOINT = 'https://cloud.appwrite.io/v1';
+  const ADMIN_USER_ID = '69a6c4f20021bcf412f5';
+
+  const client = new Client().setEndpoint(ENDPOINT).setProject(PROJECT_ID);
+  const databases = new Databases(client);
+  const storage = new Storage(client);
+  const account = new Account(client);
+
+  let products = [];
+  let selectedFiles = [null, null, null];
+
+  // ===== AUTH CHECK =====
+  async function checkAuth() {
+    try {
+      const user = await account.get();
+      // Verify this is the admin
+      if (user.$id !== ADMIN_USER_ID) {
+        throw new Error('Not admin');
+      }
+      // Show dashboard
+      document.getElementById('authGate').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+      document.getElementById('adminEmailDisplay').textContent = user.email;
+      loadProducts();
+    } catch (err) {
+      // Not logged in — redirect
+      window.location.href = 'index.html';
+    }
+  }
+
+  // ===== LOGOUT =====
+  window.doLogout = async function() {
+    try {
+      await account.deleteSession('current');
+      showToast('Logged out successfully');
+      setTimeout(() => { window.location.href = 'index.html'; }, 800);
+    } catch(e) {
+      window.location.href = 'index.html';
+    }
+  };
+
+  // ===== LOAD PRODUCTS =====
+  window.loadProducts = async function() {
+    try {
+      const res = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
+        Query.orderDesc('$createdAt'), Query.limit(100)
+      ]);
+      products = res.documents;
+      document.getElementById('totalProducts').textContent = products.length;
+      renderProductsList();
+    } catch(err) {
+      console.error(err);
+      showToast('Failed to load products', true);
+    }
+  };
+
+  // ===== RENDER PRODUCTS LIST =====
+  function renderProductsList() {
+    const container = document.getElementById('productsList');
+    if (products.length === 0) {
+      container.innerHTML = `
+        <div class="card p-12 text-center">
+          <div class="text-5xl mb-4">📦</div>
+          <p class="text-gray-500 mb-4">No products added yet</p>
+          <button onclick="showSection('add-product')" class="btn-primary">Add Your First Product</button>
+        </div>`;
+      return;
+    }
+
+    const placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%231a2540' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%2300e5ff' font-size='14'%3ENo Image%3C/text%3E%3C/svg%3E";
+
+    container.innerHTML = products.map(product => {
+      let images = [];
+      try { images = JSON.parse(product.images); } catch(e) { images = [product.images]; }
+      const thumbUrl = images[0]
+        ? (images[0].startsWith('http') ? images[0] : `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${images[0]}/view?project=${PROJECT_ID}`)
+        : placeholder;
+
+      let specs = [];
+      try { specs = JSON.parse(product.specs); } catch(e) { specs = [product.specs]; }
+
+      return `
+        <div class="product-item">
+          <img src="${thumbUrl}" alt="${product.name}" class="product-thumb" onerror="this.src='${placeholder}'" />
+          <div class="flex-1">
+            <div class="flex items-start justify-between mb-2 flex-wrap gap-3">
+              <div>
+                <h3 class="font-semibold text-white mb-2">${product.name}</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-info">${product.badge}</span>
+                  <span class="badge badge-success">${getCategoryName(product.category)}</span>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="deleteProduct('${product.$id}')" class="btn-danger btn-small">Delete</button>
+              </div>
+            </div>
+            <p class="text-gray-500 text-sm mb-3">${product.description.substring(0, 120)}...</p>
+            <div class="flex flex-wrap gap-2">
+              ${specs.slice(0, 3).map(s => `<span class="text-xs px-2 py-1" style="background:rgba(0,229,255,0.1);color:var(--neon);border-radius:4px">${s}</span>`).join('')}
+              ${specs.length > 3 ? `<span class="text-xs px-2 py-1 text-gray-500">+${specs.length - 3} more</span>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ===== DELETE PRODUCT =====
+  window.deleteProduct = async function(id) {
+    if (!confirm('Delete this product? This cannot be undone.')) return;
+    try {
+      await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
+      showToast('Product deleted');
+      loadProducts();
+    } catch(err) {
+      showToast('Failed to delete product', true);
+    }
+  };
+
+  // ===== IMAGE HANDLING =====
+  window.handleImageSelect = function(input, index) {
+    const file = input.files[0];
+    if (!file) return;
+    processFile(file, index);
+  };
+
+  window.handleDrop = function(event, index) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('border-cyan-400');
+    const file = event.dataTransfer.files[0];
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please drop an image file.', true);
+      return;
+    }
+    processFile(file, index);
+  };
+
+  function processFile(file, index) {
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Image must be under 5MB', true);
+      return;
+    }
+    selectedFiles[index] = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById(`preview-${index}`).src = e.target.result;
+      document.getElementById(`preview-container-${index}`).style.display = 'block';
+      document.getElementById(`upload-label-${index}`).style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  window.removeImage = function(index) {
+    selectedFiles[index] = null;
+    document.getElementById(`preview-${index}`).src = '';
+    document.getElementById(`preview-container-${index}`).style.display = 'none';
+    document.getElementById(`upload-label-${index}`).style.display = 'flex';
+  };
+
+  // ===== SPECS =====
+  window.addSpecField = function() {
+    const container = document.getElementById('specsContainer');
+    const div = document.createElement('div');
+    div.className = 'spec-item';
+    const count = container.querySelectorAll('.spec-input').length + 1;
+    div.innerHTML = `
+      <input type="text" class="input-field spec-input" placeholder="Spec ${count}" />
+      <button type="button" onclick="this.parentElement.remove()" class="btn-danger btn-small" style="white-space:nowrap">✕ Remove</button>
+    `;
+    container.appendChild(div);
+  };
+
+  // ===== SUBMIT PRODUCT =====
+  window.submitProduct = async function() {
+    const name = document.getElementById('f-name').value.trim();
+    const category = document.getElementById('f-category').value;
+    const badge = document.getElementById('f-badge').value.trim();
+    const description = document.getElementById('f-description').value.trim();
+
+    if (!name || !category || !badge || !description) {
+      showToast('Please fill all required fields', true);
+      return;
+    }
+    if (!selectedFiles[0]) {
+      showToast('Please upload at least one image', true);
+      return;
+    }
+
+    const specs = Array.from(document.querySelectorAll('.spec-input'))
+      .map(i => i.value.trim()).filter(Boolean);
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Uploading...';
+
+    // Show progress
+    const progressEl = document.getElementById('uploadProgress');
+    const progressFill = document.getElementById('progressFill');
+    const statusEl = document.getElementById('uploadStatus');
+    progressEl.style.display = 'block';
+
+    try {
+      // Upload images
+      const fileIds = [];
+      const filesToUpload = selectedFiles.filter(Boolean);
+
+      for (let i = 0; i < filesToUpload.length; i++) {
+        statusEl.textContent = `Uploading image ${i+1} of ${filesToUpload.length}...`;
+        progressFill.style.width = `${((i) / (filesToUpload.length + 1)) * 100}%`;
+
+        const uploaded = await storage.createFile(BUCKET_ID, ID.unique(), filesToUpload[i]);
+        fileIds.push(uploaded.$id);
+      }
+
+      // Save product to database
+      statusEl.textContent = 'Saving product...';
+      progressFill.style.width = '90%';
+
+      await databases.createDocument(DATABASE_ID, COLLECTION_ID, ID.unique(), {
+        name,
+        category,
+        badge,
+        description,
+        images: JSON.stringify(fileIds),
+        specs: JSON.stringify(specs.length > 0 ? specs : ['No specs provided'])
+      });
+
+      progressFill.style.width = '100%';
+      statusEl.textContent = 'Done!';
+
+      showToast(`✓ ${name} added to store!`);
+      resetForm();
+      setTimeout(() => {
+        progressEl.style.display = 'none';
+        showSection('products');
+      }, 1500);
+
+    } catch(err) {
+      console.error(err);
+      showToast('Failed to add product: ' + (err.message || 'Unknown error'), true);
+      progressEl.style.display = 'none';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Add Product to Store';
+    }
+  };
+
+  // ===== RESET FORM =====
+  window.resetForm = function() {
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-category').value = '';
+    document.getElementById('f-badge').value = '';
+    document.getElementById('f-description').value = '';
+    selectedFiles = [null, null, null];
+    for (let i = 0; i < 3; i++) {
+      document.getElementById(`preview-container-${i}`).style.display = 'none';
+      document.getElementById(`upload-label-${i}`).style.display = 'flex';
+      document.getElementById(`preview-${i}`).src = '';
+      const label = document.getElementById(`upload-label-${i}`);
+      const input = label.querySelector('input[type=file]');
+      if (input) input.value = '';
+    }
+    document.getElementById('specsContainer').innerHTML = `
+      <div class="spec-item"><input type="text" class="input-field spec-input" placeholder="Spec 1" /></div>
+      <div class="spec-item"><input type="text" class="input-field spec-input" placeholder="Spec 2" /></div>
+      <div class="spec-item"><input type="text" class="input-field spec-input" placeholder="Spec 3" /></div>
+    `;
+    document.getElementById('uploadProgress').style.display = 'none';
+  };
+
+  // ===== NAVIGATION =====
+  window.showSection = function(section) {
+    ['dashboard','products','add-product'].forEach(s => {
+      document.getElementById(`${s}-section`).style.display = 'none';
+      const btn = document.getElementById(`nav-${s}`);
+      if (btn) btn.classList.remove('active');
+    });
+    document.getElementById(`${section}-section`).style.display = 'block';
+    const activeBtn = document.getElementById(`nav-${section}`);
+    if (activeBtn) activeBtn.classList.add('active');
+    if (section === 'products') loadProducts();
+    if (window.innerWidth <= 968) toggleMobileMenu();
+  };
+
+  window.toggleMobileMenu = function() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('show');
+  };
+
+  // ===== HELPERS =====
+  function getCategoryName(id) {
+    const map = { smartphones:'Smartphones', tvs:'Smart TVs', laptops:'Laptops', audio:'Audio', cameras:'Cameras', networking:'Networking', mining:'Crypto Mining', outdoor:'Outdoor & More' };
+    return map[id] || id;
+  }
+
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.toggle('error', isError);
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ===== START =====
+  checkAuth();
+</script>
+</body>
+</html>

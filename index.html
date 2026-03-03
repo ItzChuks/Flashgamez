@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Flashgamez Electronics</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --neon: #00e5ff;
+    --neon2: #ff6b00;
+    --dark: #080c14;
+    --card: #0d1420;
+    --border: #1a2540;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--dark); color: #e8edf5; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+  .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 3px; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.4;
+  }
+
+  nav { background: rgba(8,12,20,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+  .nav-link { position: relative; color: #8899bb; transition: color 0.3s; font-weight: 500; }
+  .nav-link:hover { color: var(--neon); }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--neon); transition:width 0.3s; }
+  .nav-link:hover::after { width:100%; }
+
+  .hero-bg {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,255,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 50%, rgba(255,107,0,0.08) 0%, transparent 60%),
+                var(--dark);
+  }
+  .hero-grid {
+    background-image: linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .glitch { position: relative; }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute; top: 0; left: 0; width: 100%;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+  .glitch::before { color: var(--neon); animation: glitch1 3s infinite; clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); }
+  .glitch::after { color: var(--neon2); animation: glitch2 3s infinite; clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
+  @keyframes glitch1 { 0%,95%{transform:translate(0)} 96%{transform:translate(-3px,1px)} 97%{transform:translate(3px,-1px)} 98%{transform:translate(0)} }
+  @keyframes glitch2 { 0%,95%{transform:translate(0)} 96%{transform:translate(3px,1px)} 97%{transform:translate(-3px,-1px)} 98%{transform:translate(0)} }
+
+  .btn-neon {
+    background: transparent;
+    border: 1.5px solid var(--neon);
+    color: var(--neon);
+    padding: 12px 32px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-neon::before { content:''; position:absolute; inset:0; background:var(--neon); transform:translateX(-101%); transition:transform 0.3s; z-index:-1; }
+  .btn-neon:hover { color: var(--dark); box-shadow: 0 0 25px rgba(0,229,255,0.4); }
+  .btn-neon:hover::before { transform:translateX(0); }
+
+  .btn-orange {
+    background: var(--neon2);
+    border: none;
+    color: #fff;
+    padding: 12px 32px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: all 0.3s;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-orange:hover { background: #ff8c35; box-shadow: 0 0 25px rgba(255,107,0,0.5); }
+
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .product-card::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .product-card:hover { border-color: var(--neon); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,229,255,0.12); }
+  .product-card:hover::before { opacity: 1; }
+
+  .category-badge {
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--neon);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    display: inline-block;
+  }
+
+  .cart-panel {
+    position: fixed; right: -420px; top: 0; width: 420px; height: 100vh;
+    background: #0a0f1c; border-left: 1px solid var(--border);
+    z-index: 200; transition: right 0.4s cubic-bezier(0.77,0,0.18,1);
+    display: flex; flex-direction: column;
+    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+  }
+  .cart-panel.open { right: 0; }
+  .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:199; display:none; }
+  .cart-overlay.show { display:block; }
+
+  .img-slider { position: relative; overflow: hidden; }
+  .img-slides { display: flex; transition: transform 0.4s ease; }
+  .img-slides img { width:100%; flex-shrink:0; object-fit:cover; }
+  .slide-dot { width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.3); cursor:pointer; transition:all 0.2s; }
+  .slide-dot.active { background: var(--neon); width:20px; border-radius:4px; }
+
+  .modal { position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center; padding:20px; }
+  .modal.show { display:flex; }
+  .modal-bg { position:absolute; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); }
+  .modal-content {
+    position:relative; z-index:1; background:var(--card); border:1px solid var(--border);
+    max-width:680px; width:100%; max-height:90vh; overflow-y:auto;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+
+  .lightbox { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; padding:20px; }
+  .lightbox.show { display:flex; }
+  .lightbox-bg { position:absolute; inset:0; background:rgba(0,0,0,0.95); backdrop-filter:blur(20px); }
+  .lightbox-content { position:relative; z-index:1; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center; }
+  .lightbox-img { max-width:100%; max-height:80vh; object-fit:contain; border:2px solid var(--border); box-shadow: 0 20px 80px rgba(0,229,255,0.2); }
+  .lightbox-nav {
+    position:absolute; top:50%; transform:translateY(-50%); width:50px; height:50px;
+    background:rgba(13,20,32,0.9); border:1px solid var(--border); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:#8899bb; font-size:24px; transition:all 0.3s; z-index:2;
+  }
+  .lightbox-nav:hover { border-color:var(--neon); color:var(--neon); }
+  .lightbox-nav.prev { left:20px; }
+  .lightbox-nav.next { right:20px; }
+  .lightbox-close {
+    position:absolute; top:20px; right:20px; width:50px; height:50px;
+    background:rgba(13,20,32,0.9); border:1px solid var(--border); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:#8899bb; font-size:28px; transition:all 0.3s; z-index:2;
+  }
+  .lightbox-close:hover { border-color:var(--neon2); color:var(--neon2); }
+  .lightbox-info { margin-top:20px; text-align:center; color:#8899bb; font-size:14px; }
+  .lightbox-counter { color:var(--neon); font-weight:600; margin-right:8px; }
+
+  .admin-btn {
+    position: fixed; bottom: 24px; left: 24px; z-index: 50;
+    width: 44px; height: 44px; background: rgba(13,20,32,0.9); border: 1px solid var(--border);
+    border-radius: 50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all 0.3s; color: #445577; font-size:16px;
+  }
+  .admin-btn:hover { border-color: var(--neon2); color: var(--neon2); }
+
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size: clamp(36px,6vw,72px); letter-spacing:0.02em; line-height:1; }
+
+  .toast { position:fixed; bottom:24px; right:24px; z-index:400; background:var(--card); border:1px solid var(--neon); color:#fff; padding:14px 20px; font-size:14px; transform:translateX(140%); transition:transform 0.4s; border-left:3px solid var(--neon); }
+  .toast.show { transform:translateX(0); }
+
+  .ticker-track { display:flex; gap:60px; animation: ticker 25s linear infinite; white-space:nowrap; }
+  @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  .cart-item-img { width:64px; height:64px; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
+
+  .skeleton { background: linear-gradient(90deg, var(--card) 25%, #131d2e 50%, var(--card) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  @media(max-width:640px) {
+    .cart-panel { width:100%; right:-100%; }
+    .cart-panel.open { right:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="p-6 border-b border-gray-800 flex justify-between items-center">
+    <div>
+      <span class="bebas text-2xl text-white">YOUR CART</span>
+      <span class="ml-2 text-sm text-gray-400" id="cartCount">0 items</span>
+    </div>
+    <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl leading-none">&times;</button>
+  </div>
+  <div class="flex-1 overflow-y-auto p-4" id="cartItems">
+    <div class="text-center py-20 text-gray-600" id="emptyCart">
+      <div class="text-5xl mb-4">🛒</div>
+      <p>Your cart is empty</p>
+    </div>
+  </div>
+  <div class="p-6 border-t border-gray-800" id="cartFooter" style="display:none">
+    <p class="text-xs text-gray-500 mb-4">Prices are discussed on WhatsApp. Add items and we'll get you the best deal.</p>
+    <button onclick="placeOrder()" class="btn-orange w-full text-center">Place Order via WhatsApp</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="#" class="flex items-center gap-3">
+      <div class="w-8 h-8 relative">
+        <div class="absolute inset-0" style="background:var(--neon);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);opacity:0.15"></div>
+        <div class="absolute inset-1" style="background:var(--neon);clip-path:polygon(50% 10%,90% 30%,90% 70%,50% 90%,10% 70%,10% 30%)"></div>
+      </div>
+      <div>
+        <span class="bebas text-white text-lg tracking-widest">FLASHGAMEZ</span>
+        <span class="block text-xs tracking-widest" style="color:var(--neon);margin-top:-4px">ELECTRONICS</span>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#store" class="nav-link">Store</a>
+      <a href="#categories" class="nav-link">Categories</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleCart()" class="relative flex items-center gap-2 text-gray-300 hover:text-white transition-colors">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="absolute -top-2 -right-2 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold" style="background:var(--neon);color:var(--dark)" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero-bg hero-grid min-h-screen flex items-center relative overflow-hidden">
+  <div class="absolute inset-0">
+    <div class="absolute" style="width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.06),transparent);top:-100px;right:-100px"></div>
+    <div class="absolute" style="width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,0.06),transparent);bottom:100px;left:-50px"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 py-24 relative z-10">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-px" style="background:var(--neon)"></div>
+        <span class="text-xs tracking-widest font-semibold uppercase" style="color:var(--neon)">California USA / China</span>
+      </div>
+      <h1 class="glitch bebas text-white mb-6" data-text="FLASHGAMEZ ELECTRONICS" style="font-size:clamp(40px,8vw,96px);line-height:1">
+        FLASHGAMEZ <br/><span style="color:var(--neon)">ELECTRONICS</span>
+      </h1>
+      <p class="text-gray-400 text-lg mb-10 max-w-xl leading-relaxed">Premium smartphones, smart TVs, laptops, cameras & tech gear. Global sourcing, unbeatable deals.</p>
+      <div class="flex flex-wrap gap-4">
+        <a href="#store" class="btn-neon">Shop Now</a>
+        <a href="#contact" class="btn-orange">Contact Us</a>
+      </div>
+      <div class="flex gap-12 mt-16">
+        <div>
+          <div class="bebas text-4xl" style="color:var(--neon)" id="heroProductCount">—</div>
+          <div class="text-xs text-gray-500 uppercase tracking-widest">Products</div>
+        </div>
+        <div>
+          <div class="bebas text-4xl text-white">100%</div>
+          <div class="text-xs text-gray-500 uppercase tracking-widest">Authentic</div>
+        </div>
+        <div>
+          <div class="bebas text-4xl" style="color:var(--neon2)">24/7</div>
+          <div class="text-xs text-gray-500 uppercase tracking-widest">Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+    <span class="text-xs text-gray-600 uppercase tracking-widest">Scroll</span>
+    <div class="w-px h-12" style="background:linear-gradient(to bottom,var(--neon),transparent)"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="overflow-hidden py-3 border-y" style="border-color:var(--border);background:rgba(0,229,255,0.03)">
+  <div class="flex">
+    <div class="ticker-track text-xs font-semibold uppercase tracking-widest" style="color:var(--neon)">
+      <span>iPhone</span><span>•</span><span>Samsung Galaxy</span><span>•</span><span>Google Pixel</span><span>•</span>
+      <span>MacBook</span><span>•</span><span>MSI Gaming</span><span>•</span><span>JBL Speakers</span><span>•</span>
+      <span>Samsung Smart TV</span><span>•</span><span>LG Smart TV</span><span>•</span><span>Bitmain Antminer</span><span>•</span>
+      <span>Starlink</span><span>•</span><span>Canon Camera</span><span>•</span><span>GoPro Hero</span><span>•</span><span>Pioneer DJ</span><span>•</span>
+      <span>iPhone</span><span>•</span><span>Samsung Galaxy</span><span>•</span><span>Google Pixel</span><span>•</span>
+      <span>MacBook</span><span>•</span><span>MSI Gaming</span><span>•</span><span>JBL Speakers</span><span>•</span>
+      <span>Samsung Smart TV</span><span>•</span><span>LG Smart TV</span><span>•</span><span>Bitmain Antminer</span><span>•</span>
+      <span>Starlink</span><span>•</span><span>Canon Camera</span><span>•</span><span>GoPro Hero</span><span>•</span><span>Pioneer DJ</span>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section id="categories" class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-12">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-px" style="background:var(--neon)"></div>
+        <span class="text-xs tracking-widest" style="color:var(--neon)">BROWSE BY</span>
+      </div>
+      <h2 class="section-title text-white">CATEGORIES</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="categoryGrid"></div>
+  </div>
+</section>
+
+<!-- STORE -->
+<section id="store" class="py-20" style="background:rgba(13,20,32,0.5)">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-px" style="background:var(--neon2)"></div>
+            <span class="text-xs tracking-widest" style="color:var(--neon2)">ALL PRODUCTS</span>
+          </div>
+          <h2 class="section-title text-white">THE STORE</h2>
+        </div>
+        <div class="relative w-full md:w-80">
+          <input type="text" id="searchInput" placeholder="Search products..." oninput="handleSearch(this.value)"
+            class="w-full bg-transparent border px-5 py-3 pr-12 text-white text-sm outline-none transition-all placeholder-gray-600 focus:border-cyan-400"
+            style="border-color:var(--border);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))"/>
+          <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" id="searchIcon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <button onclick="clearSearch()" id="clearBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors hidden text-lg leading-none">&times;</button>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2" id="filterTabs"></div>
+      <div id="searchMeta" class="mt-4 text-xs text-gray-500 hidden"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productGrid">
+      <!-- Skeleton loaders -->
+      ${Array(8).fill(0).map(()=>`
+        <div class="product-card">
+          <div class="skeleton" style="height:220px"></div>
+          <div class="p-4 space-y-3">
+            <div class="skeleton h-4 w-3/4"></div>
+            <div class="skeleton h-3 w-full"></div>
+            <div class="skeleton h-3 w-2/3"></div>
+            <div class="skeleton h-8 w-full mt-4"></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-12">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-px" style="background:var(--neon)"></div>
+        <span class="text-xs tracking-widest" style="color:var(--neon)">GET IN TOUCH</span>
+      </div>
+      <h2 class="section-title text-white">CONTACT US</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <a href="https://wa.me/15513502306" target="_blank" class="product-card p-6 block group">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3)">📱</div>
+        <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">WhatsApp</div>
+        <div class="font-semibold text-white group-hover:text-green-400 transition-colors">+1 551 350 2306</div>
+        <div class="text-xs text-gray-600 mt-1">Chat with us instantly</div>
+      </a>
+      <a href="tel:+18727773816" class="product-card p-6 block group">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.3)">📞</div>
+        <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">Call / Text</div>
+        <div class="font-semibold text-white group-hover:text-cyan-400 transition-colors">+1 872 777 3816</div>
+        <div class="text-xs text-gray-600 mt-1">Call or text us</div>
+      </a>
+      <a href="mailto:flashgameelectronics@gmail.com" class="product-card p-6 block group">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(255,107,0,0.1);border:1px solid rgba(255,107,0,0.3)">✉️</div>
+        <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">Email</div>
+        <div class="font-semibold text-white group-hover:text-orange-400 transition-colors">flashgameelectronics@gmail.com</div>
+        <div class="text-xs text-gray-600 mt-1">Send us an email</div>
+      </a>
+    </div>
+    <div class="mt-6 p-6 product-card">
+      <div class="flex items-center gap-3 text-gray-400 text-sm">
+        <span class="text-xl">📍</span>
+        <span>California, USA & China — Shipping worldwide. Contact us for shipping details to your location.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t py-8" style="border-color:var(--border)">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-6 h-6 relative">
+        <div class="absolute inset-0" style="background:var(--neon);clip-path:polygon(50% 10%,90% 30%,90% 70%,50% 90%,10% 70%,10% 30%)"></div>
+      </div>
+      <span class="bebas text-white tracking-widest">FLASHGAMEZ ELECTRONICS</span>
+    </div>
+    <p class="text-gray-600 text-sm">© 2025 Flashgamez Electronics. All rights reserved.</p>
+    <p class="text-gray-700 text-xs">California USA · China</p>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-bg" onclick="closeModal()"></div>
+  <div class="modal-content" id="modalContent"></div>
+</div>
+
+<!-- IMAGE LIGHTBOX -->
+<div class="lightbox" id="imageLightbox">
+  <div class="lightbox-bg" onclick="closeLightbox()"></div>
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-nav prev" onclick="lightboxPrev()" id="lightboxPrev">&lsaquo;</button>
+  <button class="lightbox-nav next" onclick="lightboxNext()" id="lightboxNext">&rsaquo;</button>
+  <div class="lightbox-content">
+    <img id="lightboxImg" class="lightbox-img" src="" alt="Product Image"/>
+    <div class="lightbox-info">
+      <span class="lightbox-counter" id="lightboxCounter"></span>
+      <span id="lightboxTitle"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal" id="adminModal">
+  <div class="modal-bg" onclick="closeAdminModal()"></div>
+  <div class="modal-content p-8 max-w-md w-full mx-auto" style="clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px))">
+    <h2 class="bebas text-3xl text-white mb-1">ADMIN ACCESS</h2>
+    <p class="text-gray-500 text-sm mb-8">Enter credentials to access dashboard</p>
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs tracking-widest text-gray-500 uppercase block mb-2">Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@flashgamez.com" class="w-full bg-transparent border px-4 py-3 text-white text-sm outline-none focus:border-cyan-400 transition-colors" style="border-color:var(--border)" />
+      </div>
+      <div>
+        <label class="text-xs tracking-widest text-gray-500 uppercase block mb-2">Password</label>
+        <input type="password" id="adminPass" placeholder="••••••••" class="w-full bg-transparent border px-4 py-3 text-white text-sm outline-none focus:border-cyan-400 transition-colors" style="border-color:var(--border)" onkeydown="if(event.key==='Enter')doAdminLogin()" />
+      </div>
+      <div id="adminError" class="text-red-400 text-xs hidden">Invalid credentials. Please try again.</div>
+      <div id="adminLoading" class="text-cyan-400 text-xs hidden">Logging in...</div>
+      <button onclick="doAdminLogin()" class="btn-neon w-full mt-2" id="loginBtn">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN BUTTON -->
+<button class="admin-btn" onclick="openAdminModal()" title="Admin Access">
+  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+</button>
+
+<!-- APPWRITE SDK -->
+<script type="module">
+  import { Client, Databases, Storage, Account, Query } from 'https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm';
+
+  // ===== APPWRITE CONFIG =====
+  const PROJECT_ID = '69a6c445003bd2ba2780';
+  const DATABASE_ID = '69a6c56e0000b39cf73f';
+  const COLLECTION_ID = 'products';
+  const BUCKET_ID = '69a6c72d000a12baf2e4';
+  const ENDPOINT = 'https://cloud.appwrite.io/v1';
+
+  const client = new Client().setEndpoint(ENDPOINT).setProject(PROJECT_ID);
+  const databases = new Databases(client);
+  const storage = new Storage(client);
+  const account = new Account(client);
+
+  // ===== CATEGORIES =====
+  const categories = [
+    { id: 'smartphones', name: 'Smartphones', icon: '📱', color: 'var(--neon)' },
+    { id: 'tvs', name: 'Smart TVs', icon: '📺', color: 'var(--neon2)' },
+    { id: 'laptops', name: 'Laptops', icon: '💻', color: '#a855f7' },
+    { id: 'audio', name: 'Audio', icon: '🔊', color: '#22c55e' },
+    { id: 'cameras', name: 'Cameras', icon: '📷', color: '#f59e0b' },
+    { id: 'networking', name: 'Networking', icon: '🛜', color: '#06b6d4' },
+    { id: 'mining', name: 'Crypto Mining', icon: '⛏️', color: '#eab308' },
+    { id: 'outdoor', name: 'Outdoor & More', icon: '🌿', color: '#4ade80' },
+  ];
+
+  // ===== STATE =====
+  let allProducts = [];
+  let cart = [];
+  let activeFilter = 'all';
+  let searchQuery = '';
+  let lightboxState = { productId: null, currentIndex: 0 };
+
+  // ===== FETCH PRODUCTS FROM APPWRITE =====
+  async function loadProducts() {
+    try {
+      const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
+        Query.orderDesc('$createdAt'),
+        Query.limit(100)
+      ]);
+
+      allProducts = response.documents.map(doc => {
+        let images = [];
+        try { images = JSON.parse(doc.images); } catch(e) { images = [doc.images]; }
+        let specs = [];
+        try { specs = JSON.parse(doc.specs); } catch(e) { specs = [doc.specs]; }
+
+        // Build image URLs from file IDs
+        const imageUrls = images.map(fileId => {
+          if (fileId.startsWith('http')) return fileId;
+          return `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${fileId}/view?project=${PROJECT_ID}`;
+        });
+
+        return {
+          id: doc.$id,
+          name: doc.name,
+          category: doc.category,
+          badge: doc.badge,
+          description: doc.description,
+          specs: specs,
+          images: imageUrls.length > 0 ? imageUrls : ['https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80']
+        };
+      });
+
+      document.getElementById('heroProductCount').textContent = allProducts.length + '+';
+      renderCategories();
+      renderFilterTabs();
+      renderProducts();
+
+    } catch (err) {
+      console.error('Failed to load products:', err);
+      document.getElementById('productGrid').innerHTML = `
+        <div class="col-span-full text-center py-20">
+          <div class="text-5xl mb-4">⚠️</div>
+          <p class="text-gray-500">Failed to load products. Please refresh.</p>
+        </div>`;
+    }
+  }
+
+  // ===== RENDER CATEGORIES =====
+  function renderCategories() {
+    const grid = document.getElementById('categoryGrid');
+    grid.innerHTML = categories.map(c => `
+      <div onclick="window.filterProducts('${c.id}')" class="product-card p-5 cursor-pointer text-center group">
+        <div class="text-3xl mb-3">${c.icon}</div>
+        <div class="font-semibold text-white text-sm group-hover:text-cyan-300 transition-colors">${c.name}</div>
+        <div class="text-xs text-gray-600 mt-1">${allProducts.filter(p=>p.category===c.id).length} items</div>
+      </div>
+    `).join('');
+  }
+
+  // ===== RENDER FILTER TABS =====
+  function renderFilterTabs() {
+    const container = document.getElementById('filterTabs');
+    const tabs = [{ id:'all', name:'All' }, ...categories];
+    container.innerHTML = tabs.map(t => `
+      <button onclick="window.filterProducts('${t.id}')" class="filter-tab px-4 py-2 text-xs font-semibold uppercase tracking-widest border transition-colors ${activeFilter===t.id?'border-cyan-400 text-cyan-400':'border-gray-700 text-gray-500 hover:border-gray-500 hover:text-gray-300'}" style="clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))">
+        ${t.name}
+      </button>
+    `).join('');
+  }
+
+  // ===== RENDER PRODUCTS =====
+  function renderProducts() {
+    const grid = document.getElementById('productGrid');
+    const meta = document.getElementById('searchMeta');
+    let filtered = activeFilter === 'all' ? allProducts : allProducts.filter(p => p.category === activeFilter);
+
+    if (searchQuery) {
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(searchQuery) ||
+        p.badge.toLowerCase().includes(searchQuery) ||
+        p.description.toLowerCase().includes(searchQuery) ||
+        p.specs.some(s => s.toLowerCase().includes(searchQuery))
+      );
+    }
+
+    if (searchQuery) {
+      meta.classList.remove('hidden');
+      meta.innerHTML = filtered.length > 0
+        ? `<span style="color:var(--neon)">Found ${filtered.length} result${filtered.length!==1?'s':''}</span> for "<span class="text-white">${searchQuery}</span>"`
+        : `No results for "<span class="text-white">${searchQuery}</span>"`;
+    } else {
+      meta.classList.add('hidden');
+    }
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="col-span-full text-center py-20">
+          <div class="text-5xl mb-4">🔍</div>
+          <p class="text-gray-500 mb-2">No products found</p>
+          <button onclick="window.clearSearch()" class="text-xs mt-2 underline" style="color:var(--neon)">Clear search</button>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(p => `
+      <div class="product-card" onclick="window.openModal('${p.id}')">
+        <div class="img-slider relative" style="height:220px">
+          <div class="img-slides h-full" id="slides-${p.id}">
+            ${p.images.map((img, idx) => `<img src="${img}" alt="${p.name}" style="height:220px;width:100%;object-fit:cover;flex-shrink:0;cursor:pointer" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'" onclick="event.stopPropagation();window.openLightbox('${p.id}', ${idx})"/>`).join('')}
+          </div>
+          <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5" onclick="event.stopPropagation()">
+            ${p.images.map((_, i) => `<div class="slide-dot ${i===0?'active':''}" id="dot-${p.id}-${i}" onclick="window.slideTo('${p.id}',${i})"></div>`).join('')}
+          </div>
+          <div class="absolute top-3 left-3"><span class="category-badge">${p.badge}</span></div>
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-white text-sm mb-2 leading-tight">${p.name}</h3>
+          <p class="text-gray-500 text-xs leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.description}</p>
+          <div class="flex gap-2">
+            <button onclick="event.stopPropagation();window.addToCart('${p.id}')" class="btn-neon flex-1 text-xs py-2 px-3">Add to Cart</button>
+            <button onclick="event.stopPropagation();window.openModal('${p.id}')" class="px-3 py-2 border text-gray-400 hover:text-white hover:border-gray-500 transition-colors text-xs" style="border-color:var(--border)">Details</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ===== EXPOSE GLOBALS =====
+  window.filterProducts = function(id) {
+    activeFilter = id;
+    searchQuery = '';
+    const input = document.getElementById('searchInput');
+    if(input) input.value = '';
+    document.getElementById('clearBtn').classList.add('hidden');
+    document.getElementById('searchIcon').classList.remove('hidden');
+    renderFilterTabs();
+    renderProducts();
+    document.getElementById('store').scrollIntoView({behavior:'smooth'});
+  };
+
+  window.handleSearch = function(val) {
+    searchQuery = val.trim().toLowerCase();
+    document.getElementById('clearBtn').classList.toggle('hidden', !searchQuery);
+    document.getElementById('searchIcon').classList.toggle('hidden', !!searchQuery);
+    renderProducts();
+  };
+
+  window.clearSearch = function() {
+    searchQuery = '';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('clearBtn').classList.add('hidden');
+    document.getElementById('searchIcon').classList.remove('hidden');
+    renderProducts();
+  };
+
+  window.slideTo = function(productId, index) {
+    const slides = document.getElementById(`slides-${productId}`);
+    if(!slides) return;
+    slides.style.transform = `translateX(-${index * 100}%)`;
+    document.querySelectorAll(`[id^="dot-${productId}-"]`).forEach((d,i) => d.classList.toggle('active', i===index));
+  };
+
+  window.openModal = function(id) {
+    const p = allProducts.find(x => x.id === id);
+    if (!p) return;
+    const modal = document.getElementById('productModal');
+    document.getElementById('modalContent').innerHTML = `
+      <div class="relative">
+        <button onclick="window.closeModal()" class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white text-xl bg-black bg-opacity-50 rounded-full">&times;</button>
+        <div class="img-slider" style="height:300px">
+          <div class="img-slides h-full" id="modal-slides-${p.id}">
+            ${p.images.map((img,idx)=>`<img src="${img}" alt="${p.name}" style="height:300px;width:100%;object-fit:cover;flex-shrink:0;cursor:pointer" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'" onclick="window.openLightbox('${p.id}',${idx})"/>`).join('')}
+          </div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            ${p.images.map((_,i)=>`<div class="slide-dot ${i===0?'active':''}" id="mdot-${p.id}-${i}" onclick="window.modalSlideTo('${p.id}',${i})"></div>`).join('')}
+          </div>
+        </div>
+        <div class="p-6">
+          <span class="category-badge mb-3 inline-block">${p.badge}</span>
+          <h2 class="bebas text-3xl text-white mb-3">${p.name}</h2>
+          <p class="text-gray-400 leading-relaxed mb-6">${p.description}</p>
+          <div class="mb-6">
+            <h4 class="text-xs tracking-widest text-gray-500 uppercase mb-3">Key Specs</h4>
+            <div class="flex flex-wrap gap-2">
+              ${p.specs.map(s=>`<span class="text-xs px-3 py-1.5 font-medium" style="background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.2);color:rgba(0,229,255,0.9)">${s}</span>`).join('')}
+            </div>
+          </div>
+          <div class="p-4 mb-6 rounded" style="background:rgba(255,107,0,0.07);border:1px solid rgba(255,107,0,0.2)">
+            <p class="text-xs text-gray-400">💡 <span style="color:var(--neon2)">No price listed.</span> Add to cart and place your order — we'll contact you via WhatsApp with the best price and availability.</p>
+          </div>
+          <button onclick="window.addToCart('${p.id}');window.closeModal()" class="btn-neon w-full">Add to Cart</button>
+        </div>
+      </div>
+    `;
+    modal.classList.add('show');
+  };
+
+  window.modalSlideTo = function(productId, index) {
+    const slides = document.getElementById(`modal-slides-${productId}`);
+    if(!slides) return;
+    slides.style.transform = `translateX(-${index*100}%)`;
+    document.querySelectorAll(`[id^="mdot-${productId}-"]`).forEach((d,i) => d.classList.toggle('active', i===index));
+  };
+
+  window.closeModal = function() { document.getElementById('productModal').classList.remove('show'); };
+
+  // ===== CART =====
+  window.toggleCart = function() {
+    document.getElementById('cartPanel').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('show');
+  };
+
+  window.addToCart = function(id) {
+    const p = allProducts.find(x => x.id === id);
+    if (!p) return;
+    const existing = cart.find(x => x.id === id);
+    if(existing) { existing.qty++; }
+    else { cart.push({...p, qty:1}); }
+    updateCartUI();
+    showToast(`✓ ${p.name} added to cart`);
+  };
+
+  window.removeFromCart = function(id) {
+    cart = cart.filter(x => x.id !== id);
+    updateCartUI();
+  };
+
+  window.changeQty = function(id, delta) {
+    const item = cart.find(x => x.id === id);
+    if(!item) return;
+    item.qty += delta;
+    if(item.qty <= 0) cart = cart.filter(x => x.id !== id);
+    updateCartUI();
+  };
+
+  function updateCartUI() {
+    const total = cart.reduce((s,i) => s+i.qty, 0);
+    document.getElementById('cartBadge').textContent = total;
+    document.getElementById('cartCount').textContent = `${total} item${total!==1?'s':''}`;
+    const itemsEl = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFooter');
+    if(cart.length===0) {
+      itemsEl.innerHTML = `<div class="text-center py-20 text-gray-600"><div class="text-5xl mb-4">🛒</div><p>Your cart is empty</p></div>`;
+      footer.style.display='none';
+      return;
+    }
+    footer.style.display='block';
+    itemsEl.innerHTML = cart.map(item=>`
+      <div class="flex gap-3 items-start p-3 mb-3 rounded" style="background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+        <img src="${item.images[0]}" class="cart-item-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'"/>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-medium text-white leading-tight">${item.name}</div>
+          <div class="text-xs text-gray-500 mt-1">${item.badge}</div>
+          <div class="flex items-center gap-3 mt-2">
+            <div class="flex items-center gap-2">
+              <button onclick="window.changeQty('${item.id}',-1)" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white border border-gray-700 text-lg leading-none">−</button>
+              <span class="text-sm font-semibold text-white">${item.qty}</span>
+              <button onclick="window.changeQty('${item.id}',1)" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white border border-gray-700 text-lg leading-none">+</button>
+            </div>
+            <button onclick="window.removeFromCart('${item.id}')" class="text-xs text-red-500 hover:text-red-400">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.placeOrder = function() {
+    if(cart.length===0) return;
+    const lines = cart.map(i => {
+      const imageUrl = i.images && i.images[0] ? `\n  🖼 ${i.images[0]}` : '';
+      return `• ${i.name} (x${i.qty})${imageUrl}`;
+    }).join('\n\n');
+    const msg = `Hello Flashgamez Electronics! 👋\n\nI'd like to place an order:\n\n${lines}\n\nPlease send me pricing and availability. Thank you!`;
+    window.open(`https://wa.me/15513502306?text=${encodeURIComponent(msg)}`, '_blank');
+    showToast('Redirecting to WhatsApp...');
+  };
+
+  // ===== LIGHTBOX =====
+  window.openLightbox = function(productId, imageIndex) {
+    const p = allProducts.find(x => x.id === productId);
+    if (!p) return;
+    lightboxState.productId = productId;
+    lightboxState.currentIndex = imageIndex;
+    updateLightboxImage();
+    document.getElementById('imageLightbox').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLightbox = function() {
+    document.getElementById('imageLightbox').classList.remove('show');
+    document.body.style.overflow = '';
+  };
+
+  function updateLightboxImage() {
+    const p = allProducts.find(x => x.id === lightboxState.productId);
+    if (!p) return;
+    document.getElementById('lightboxImg').src = p.images[lightboxState.currentIndex];
+    document.getElementById('lightboxCounter').textContent = `${lightboxState.currentIndex + 1} / ${p.images.length}`;
+    document.getElementById('lightboxTitle').textContent = p.name;
+    document.getElementById('lightboxPrev').style.display = p.images.length > 1 ? 'flex' : 'none';
+    document.getElementById('lightboxNext').style.display = p.images.length > 1 ? 'flex' : 'none';
+  }
+
+  window.lightboxPrev = function() {
+    const p = allProducts.find(x => x.id === lightboxState.productId);
+    if (!p) return;
+    lightboxState.currentIndex = (lightboxState.currentIndex - 1 + p.images.length) % p.images.length;
+    updateLightboxImage();
+  };
+
+  window.lightboxNext = function() {
+    const p = allProducts.find(x => x.id === lightboxState.productId);
+    if (!p) return;
+    lightboxState.currentIndex = (lightboxState.currentIndex + 1) % p.images.length;
+    updateLightboxImage();
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('imageLightbox').classList.contains('show')) return;
+    if (e.key === 'Escape') window.closeLightbox();
+    else if (e.key === 'ArrowLeft') window.lightboxPrev();
+    else if (e.key === 'ArrowRight') window.lightboxNext();
+  });
+
+  // ===== ADMIN LOGIN (Appwrite Auth) =====
+  window.openAdminModal = function() { document.getElementById('adminModal').classList.add('show'); };
+  window.closeAdminModal = function() {
+    document.getElementById('adminModal').classList.remove('show');
+    document.getElementById('adminError').classList.add('hidden');
+    document.getElementById('adminLoading').classList.add('hidden');
+  };
+
+  window.doAdminLogin = async function() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const pass = document.getElementById('adminPass').value;
+    const errEl = document.getElementById('adminError');
+    const loadEl = document.getElementById('adminLoading');
+    const btnEl = document.getElementById('loginBtn');
+
+    errEl.classList.add('hidden');
+    loadEl.classList.remove('hidden');
+    btnEl.disabled = true;
+    btnEl.textContent = 'Logging in...';
+
+    try {
+      // Delete existing session if any
+      try { await account.deleteSession('current'); } catch(e) {}
+      // Create new session
+      await account.createEmailPasswordSession(email, pass);
+      loadEl.classList.add('hidden');
+      showToast('✓ Login successful! Redirecting...');
+      setTimeout(() => { window.location.href = 'admin.html'; }, 1000);
+    } catch (err) {
+      loadEl.classList.add('hidden');
+      btnEl.disabled = false;
+      btnEl.textContent = 'Login';
+      errEl.textContent = 'Invalid email or password.';
+      errEl.classList.remove('hidden');
+    }
+  };
+
+  // ===== TOAST =====
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+  window.showToast = showToast;
+
+  // ===== INIT =====
+  loadProducts();
+</script>
+</body>
+</html>
