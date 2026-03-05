@@ -58,53 +58,30 @@
   @keyframes glitch2 { 0%,95%{transform:translate(0)} 96%{transform:translate(3px,1px)} 97%{transform:translate(-3px,-1px)} 98%{transform:translate(0)} }
 
   .btn-neon {
-    background: transparent;
-    border: 1.5px solid var(--neon);
-    color: var(--neon);
-    padding: 12px 32px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-size: 13px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
+    background: transparent; border: 1.5px solid var(--neon); color: var(--neon);
+    padding: 12px 32px; font-family: 'Outfit', sans-serif; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px;
+    cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    display: inline-block;
-    text-decoration: none;
+    display: inline-block; text-decoration: none;
   }
   .btn-neon::before { content:''; position:absolute; inset:0; background:var(--neon); transform:translateX(-101%); transition:transform 0.3s; z-index:-1; }
   .btn-neon:hover { color: var(--dark); box-shadow: 0 0 25px rgba(0,229,255,0.4); }
   .btn-neon:hover::before { transform:translateX(0); }
 
   .btn-orange {
-    background: var(--neon2);
-    border: none;
-    color: #fff;
-    padding: 12px 32px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-size: 13px;
-    cursor: pointer;
+    background: var(--neon2); border: none; color: #fff; padding: 12px 32px;
+    font-family: 'Outfit', sans-serif; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; font-size: 13px; cursor: pointer;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    transition: all 0.3s;
-    display: inline-block;
-    text-decoration: none;
+    transition: all 0.3s; display: inline-block; text-decoration: none;
   }
   .btn-orange:hover { background: #ff8c35; box-shadow: 0 0 25px rgba(255,107,0,0.5); }
 
   .product-card {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: var(--card); border: 1px solid var(--border);
     clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
+    transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer;
   }
   .product-card::before {
     content:''; position:absolute; inset:0;
@@ -115,23 +92,16 @@
   .product-card:hover::before { opacity: 1; }
 
   .category-badge {
-    background: rgba(0,229,255,0.1);
-    border: 1px solid rgba(0,229,255,0.3);
-    color: var(--neon);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    display: inline-block;
+    background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--neon);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 3px 10px; display: inline-block;
   }
 
   .cart-panel {
     position: fixed; right: -420px; top: 0; width: 420px; height: 100vh;
     background: #0a0f1c; border-left: 1px solid var(--border);
     z-index: 200; transition: right 0.4s cubic-bezier(0.77,0,0.18,1);
-    display: flex; flex-direction: column;
-    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+    display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.5);
   }
   .cart-panel.open { right: 0; }
   .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:199; display:none; }
@@ -189,7 +159,7 @@
   .toast { position:fixed; bottom:24px; right:24px; z-index:400; background:var(--card); border:1px solid var(--neon); color:#fff; padding:14px 20px; font-size:14px; transform:translateX(140%); transition:transform 0.4s; border-left:3px solid var(--neon); }
   .toast.show { transform:translateX(0); }
 
-  .ticker-track { display:flex; gap:60px; animation: ticker 25s linear infinite; white-space:nowrap; }
+  .ticker-track { display:flex; gap:60px; animation: ticker 35s linear infinite; white-space:nowrap; }
   @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
   .cart-item-img { width:64px; height:64px; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
@@ -307,10 +277,16 @@
       <span>MacBook</span><span>•</span><span>MSI Gaming</span><span>•</span><span>JBL Speakers</span><span>•</span>
       <span>Samsung Smart TV</span><span>•</span><span>LG Smart TV</span><span>•</span><span>Bitmain Antminer</span><span>•</span>
       <span>Starlink</span><span>•</span><span>Canon Camera</span><span>•</span><span>GoPro Hero</span><span>•</span><span>Pioneer DJ</span><span>•</span>
+      <span>PlayStation 5</span><span>•</span><span>Xbox Series X</span><span>•</span><span>Nintendo Switch</span><span>•</span>
+      <span>Apple Watch</span><span>•</span><span>Garmin Watch</span><span>•</span><span>Sonos Speaker</span><span>•</span>
+      <span>Electric Bike</span><span>•</span><span>Mountain Bike</span><span>•</span><span>Yamaha Outboard</span><span>•</span><span>Honda Outboard</span><span>•</span>
       <span>iPhone</span><span>•</span><span>Samsung Galaxy</span><span>•</span><span>Google Pixel</span><span>•</span>
       <span>MacBook</span><span>•</span><span>MSI Gaming</span><span>•</span><span>JBL Speakers</span><span>•</span>
       <span>Samsung Smart TV</span><span>•</span><span>LG Smart TV</span><span>•</span><span>Bitmain Antminer</span><span>•</span>
-      <span>Starlink</span><span>•</span><span>Canon Camera</span><span>•</span><span>GoPro Hero</span><span>•</span><span>Pioneer DJ</span>
+      <span>Starlink</span><span>•</span><span>Canon Camera</span><span>•</span><span>GoPro Hero</span><span>•</span><span>Pioneer DJ</span><span>•</span>
+      <span>PlayStation 5</span><span>•</span><span>Xbox Series X</span><span>•</span><span>Nintendo Switch</span><span>•</span>
+      <span>Apple Watch</span><span>•</span><span>Garmin Watch</span><span>•</span><span>Sonos Speaker</span><span>•</span>
+      <span>Electric Bike</span><span>•</span><span>Mountain Bike</span><span>•</span><span>Yamaha Outboard</span><span>•</span><span>Honda Outboard</span>
     </div>
   </div>
 </div>
@@ -354,20 +330,7 @@
       <div class="flex flex-wrap gap-2" id="filterTabs"></div>
       <div id="searchMeta" class="mt-4 text-xs text-gray-500 hidden"></div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productGrid">
-      <!-- Skeleton loaders -->
-      ${Array(8).fill(0).map(()=>`
-        <div class="product-card">
-          <div class="skeleton" style="height:220px"></div>
-          <div class="p-4 space-y-3">
-            <div class="skeleton h-4 w-3/4"></div>
-            <div class="skeleton h-3 w-full"></div>
-            <div class="skeleton h-3 w-2/3"></div>
-            <div class="skeleton h-8 w-full mt-4"></div>
-          </div>
-        </div>
-      `).join('')}
-    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productGrid"></div>
   </div>
 </section>
 
@@ -454,7 +417,7 @@
     <div class="space-y-4">
       <div>
         <label class="text-xs tracking-widest text-gray-500 uppercase block mb-2">Email</label>
-        <input type="email" id="adminEmail" placeholder="email" class="w-full bg-transparent border px-4 py-3 text-white text-sm outline-none focus:border-cyan-400 transition-colors" style="border-color:var(--border)" />
+        <input type="email" id="adminEmail" placeholder="admin@flashgamez.com" class="w-full bg-transparent border px-4 py-3 text-white text-sm outline-none focus:border-cyan-400 transition-colors" style="border-color:var(--border)" />
       </div>
       <div>
         <label class="text-xs tracking-widest text-gray-500 uppercase block mb-2">Password</label>
@@ -476,7 +439,6 @@
 <script type="module">
   import { Client, Databases, Storage, Account, Query } from 'https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm';
 
-  // ===== APPWRITE CONFIG =====
   const PROJECT_ID = '69a6c445003bd2ba2780';
   const DATABASE_ID = '69a6c56e0000b39cf73f';
   const COLLECTION_ID = 'products';
@@ -488,72 +450,59 @@
   const storage = new Storage(client);
   const account = new Account(client);
 
-  // ===== CATEGORIES =====
+  // ===== CATEGORIES (13 total) =====
   const categories = [
-    { id: 'smartphones', name: 'Smartphones', icon: '📱', color: 'var(--neon)' },
-    { id: 'tvs', name: 'Smart TVs', icon: '📺', color: 'var(--neon2)' },
-    { id: 'laptops', name: 'Laptops', icon: '💻', color: '#a855f7' },
-    { id: 'audio', name: 'Audio', icon: '🔊', color: '#22c55e' },
-    { id: 'cameras', name: 'Cameras', icon: '📷', color: '#f59e0b' },
-    { id: 'networking', name: 'Networking', icon: '🛜', color: '#06b6d4' },
-    { id: 'mining', name: 'Crypto Mining', icon: '⛏️', color: '#eab308' },
-    { id: 'outdoor', name: 'Outdoor & More', icon: '🌿', color: '#4ade80' },
+    { id: 'smartphones',  name: 'Smartphones',      icon: '📱', color: 'var(--neon)' },
+    { id: 'tvs',          name: 'Smart TVs',         icon: '📺', color: 'var(--neon2)' },
+    { id: 'laptops',      name: 'Laptops',           icon: '💻', color: '#a855f7' },
+    { id: 'audio',        name: 'Audio',             icon: '🔊', color: '#22c55e' },
+    { id: 'cameras',      name: 'Cameras',           icon: '📷', color: '#f59e0b' },
+    { id: 'networking',   name: 'Networking',        icon: '🛜', color: '#06b6d4' },
+    { id: 'mining',       name: 'Crypto Mining',     icon: '⛏️', color: '#eab308' },
+    { id: 'outdoor',      name: 'Outdoor & More',    icon: '🌿', color: '#4ade80' },
+    { id: 'videogames',   name: 'Video Games',       icon: '🎮', color: '#f43f5e' },
+    { id: 'watches',      name: 'Watches',           icon: '⌚', color: '#8b5cf6' },
+    { id: 'speakers',     name: 'Speakers',          icon: '🔈', color: '#ec4899' },
+    { id: 'bikes',        name: 'Bikes',             icon: '🚲', color: '#84cc16' },
+    { id: 'engines',      name: 'Outboard Engines',  icon: '⚙️', color: '#f97316' },
   ];
 
-  // ===== STATE =====
   let allProducts = [];
   let cart = [];
   let activeFilter = 'all';
   let searchQuery = '';
   let lightboxState = { productId: null, currentIndex: 0 };
 
-  // ===== FETCH PRODUCTS FROM APPWRITE =====
   async function loadProducts() {
     try {
       const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
-        Query.orderDesc('$createdAt'),
-        Query.limit(100)
+        Query.orderDesc('$createdAt'), Query.limit(100)
       ]);
-
       allProducts = response.documents.map(doc => {
         let images = [];
         try { images = JSON.parse(doc.images); } catch(e) { images = [doc.images]; }
         let specs = [];
         try { specs = JSON.parse(doc.specs); } catch(e) { specs = [doc.specs]; }
-
-        // Build image URLs from file IDs
         const imageUrls = images.map(fileId => {
           if (fileId.startsWith('http')) return fileId;
           return `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${fileId}/view?project=${PROJECT_ID}`;
         });
-
         return {
-          id: doc.$id,
-          name: doc.name,
-          category: doc.category,
-          badge: doc.badge,
-          description: doc.description,
-          specs: specs,
+          id: doc.$id, name: doc.name, category: doc.category,
+          badge: doc.badge, description: doc.description, specs,
           images: imageUrls.length > 0 ? imageUrls : ['https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80']
         };
       });
-
       document.getElementById('heroProductCount').textContent = allProducts.length + '+';
       renderCategories();
       renderFilterTabs();
       renderProducts();
-
     } catch (err) {
       console.error('Failed to load products:', err);
-      document.getElementById('productGrid').innerHTML = `
-        <div class="col-span-full text-center py-20">
-          <div class="text-5xl mb-4">⚠️</div>
-          <p class="text-gray-500">Failed to load products. Please refresh.</p>
-        </div>`;
+      document.getElementById('productGrid').innerHTML = `<div class="col-span-full text-center py-20"><div class="text-5xl mb-4">⚠️</div><p class="text-gray-500">Failed to load products. Please refresh.</p></div>`;
     }
   }
 
-  // ===== RENDER CATEGORIES =====
   function renderCategories() {
     const grid = document.getElementById('categoryGrid');
     grid.innerHTML = categories.map(c => `
@@ -565,7 +514,6 @@
     `).join('');
   }
 
-  // ===== RENDER FILTER TABS =====
   function renderFilterTabs() {
     const container = document.getElementById('filterTabs');
     const tabs = [{ id:'all', name:'All' }, ...categories];
@@ -576,12 +524,10 @@
     `).join('');
   }
 
-  // ===== RENDER PRODUCTS =====
   function renderProducts() {
     const grid = document.getElementById('productGrid');
     const meta = document.getElementById('searchMeta');
     let filtered = activeFilter === 'all' ? allProducts : allProducts.filter(p => p.category === activeFilter);
-
     if (searchQuery) {
       filtered = filtered.filter(p =>
         p.name.toLowerCase().includes(searchQuery) ||
@@ -590,34 +536,25 @@
         p.specs.some(s => s.toLowerCase().includes(searchQuery))
       );
     }
-
     if (searchQuery) {
       meta.classList.remove('hidden');
       meta.innerHTML = filtered.length > 0
         ? `<span style="color:var(--neon)">Found ${filtered.length} result${filtered.length!==1?'s':''}</span> for "<span class="text-white">${searchQuery}</span>"`
         : `No results for "<span class="text-white">${searchQuery}</span>"`;
-    } else {
-      meta.classList.add('hidden');
-    }
+    } else { meta.classList.add('hidden'); }
 
     if (filtered.length === 0) {
-      grid.innerHTML = `
-        <div class="col-span-full text-center py-20">
-          <div class="text-5xl mb-4">🔍</div>
-          <p class="text-gray-500 mb-2">No products found</p>
-          <button onclick="window.clearSearch()" class="text-xs mt-2 underline" style="color:var(--neon)">Clear search</button>
-        </div>`;
+      grid.innerHTML = `<div class="col-span-full text-center py-20"><div class="text-5xl mb-4">🔍</div><p class="text-gray-500 mb-2">No products found</p><button onclick="window.clearSearch()" class="text-xs mt-2 underline" style="color:var(--neon)">Clear search</button></div>`;
       return;
     }
-
     grid.innerHTML = filtered.map(p => `
       <div class="product-card" onclick="window.openModal('${p.id}')">
         <div class="img-slider relative" style="height:220px">
           <div class="img-slides h-full" id="slides-${p.id}">
-            ${p.images.map((img, idx) => `<img src="${img}" alt="${p.name}" style="height:220px;width:100%;object-fit:cover;flex-shrink:0;cursor:pointer" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'" onclick="event.stopPropagation();window.openLightbox('${p.id}', ${idx})"/>`).join('')}
+            ${p.images.map((img,idx)=>`<img src="${img}" alt="${p.name}" style="height:220px;width:100%;object-fit:cover;flex-shrink:0;cursor:pointer" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'" onclick="event.stopPropagation();window.openLightbox('${p.id}',${idx})"/>`).join('')}
           </div>
           <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5" onclick="event.stopPropagation()">
-            ${p.images.map((_, i) => `<div class="slide-dot ${i===0?'active':''}" id="dot-${p.id}-${i}" onclick="window.slideTo('${p.id}',${i})"></div>`).join('')}
+            ${p.images.map((_,i)=>`<div class="slide-dot ${i===0?'active':''}" id="dot-${p.id}-${i}" onclick="window.slideTo('${p.id}',${i})"></div>`).join('')}
           </div>
           <div class="absolute top-3 left-3"><span class="category-badge">${p.badge}</span></div>
         </div>
@@ -633,26 +570,21 @@
     `).join('');
   }
 
-  // ===== EXPOSE GLOBALS =====
   window.filterProducts = function(id) {
-    activeFilter = id;
-    searchQuery = '';
+    activeFilter = id; searchQuery = '';
     const input = document.getElementById('searchInput');
     if(input) input.value = '';
     document.getElementById('clearBtn').classList.add('hidden');
     document.getElementById('searchIcon').classList.remove('hidden');
-    renderFilterTabs();
-    renderProducts();
+    renderFilterTabs(); renderProducts();
     document.getElementById('store').scrollIntoView({behavior:'smooth'});
   };
-
   window.handleSearch = function(val) {
     searchQuery = val.trim().toLowerCase();
     document.getElementById('clearBtn').classList.toggle('hidden', !searchQuery);
     document.getElementById('searchIcon').classList.toggle('hidden', !!searchQuery);
     renderProducts();
   };
-
   window.clearSearch = function() {
     searchQuery = '';
     document.getElementById('searchInput').value = '';
@@ -660,18 +592,15 @@
     document.getElementById('searchIcon').classList.remove('hidden');
     renderProducts();
   };
-
   window.slideTo = function(productId, index) {
     const slides = document.getElementById(`slides-${productId}`);
     if(!slides) return;
-    slides.style.transform = `translateX(-${index * 100}%)`;
-    document.querySelectorAll(`[id^="dot-${productId}-"]`).forEach((d,i) => d.classList.toggle('active', i===index));
+    slides.style.transform = `translateX(-${index*100}%)`;
+    document.querySelectorAll(`[id^="dot-${productId}-"]`).forEach((d,i)=>d.classList.toggle('active',i===index));
   };
-
   window.openModal = function(id) {
-    const p = allProducts.find(x => x.id === id);
-    if (!p) return;
-    const modal = document.getElementById('productModal');
+    const p = allProducts.find(x=>x.id===id);
+    if(!p) return;
     document.getElementById('modalContent').innerHTML = `
       <div class="relative">
         <button onclick="window.closeModal()" class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white text-xl bg-black bg-opacity-50 rounded-full">&times;</button>
@@ -698,59 +627,46 @@
           </div>
           <button onclick="window.addToCart('${p.id}');window.closeModal()" class="btn-neon w-full">Add to Cart</button>
         </div>
-      </div>
-    `;
-    modal.classList.add('show');
+      </div>`;
+    document.getElementById('productModal').classList.add('show');
   };
-
-  window.modalSlideTo = function(productId, index) {
+  window.modalSlideTo = function(productId,index) {
     const slides = document.getElementById(`modal-slides-${productId}`);
     if(!slides) return;
     slides.style.transform = `translateX(-${index*100}%)`;
-    document.querySelectorAll(`[id^="mdot-${productId}-"]`).forEach((d,i) => d.classList.toggle('active', i===index));
+    document.querySelectorAll(`[id^="mdot-${productId}-"]`).forEach((d,i)=>d.classList.toggle('active',i===index));
   };
-
   window.closeModal = function() { document.getElementById('productModal').classList.remove('show'); };
 
-  // ===== CART =====
   window.toggleCart = function() {
     document.getElementById('cartPanel').classList.toggle('open');
     document.getElementById('cartOverlay').classList.toggle('show');
   };
-
   window.addToCart = function(id) {
-    const p = allProducts.find(x => x.id === id);
-    if (!p) return;
-    const existing = cart.find(x => x.id === id);
-    if(existing) { existing.qty++; }
-    else { cart.push({...p, qty:1}); }
+    const p = allProducts.find(x=>x.id===id);
+    if(!p) return;
+    const existing = cart.find(x=>x.id===id);
+    if(existing) { existing.qty++; } else { cart.push({...p,qty:1}); }
     updateCartUI();
     showToast(`✓ ${p.name} added to cart`);
   };
-
-  window.removeFromCart = function(id) {
-    cart = cart.filter(x => x.id !== id);
-    updateCartUI();
-  };
-
-  window.changeQty = function(id, delta) {
-    const item = cart.find(x => x.id === id);
+  window.removeFromCart = function(id) { cart = cart.filter(x=>x.id!==id); updateCartUI(); };
+  window.changeQty = function(id,delta) {
+    const item = cart.find(x=>x.id===id);
     if(!item) return;
     item.qty += delta;
-    if(item.qty <= 0) cart = cart.filter(x => x.id !== id);
+    if(item.qty<=0) cart = cart.filter(x=>x.id!==id);
     updateCartUI();
   };
-
   function updateCartUI() {
-    const total = cart.reduce((s,i) => s+i.qty, 0);
+    const total = cart.reduce((s,i)=>s+i.qty,0);
     document.getElementById('cartBadge').textContent = total;
     document.getElementById('cartCount').textContent = `${total} item${total!==1?'s':''}`;
     const itemsEl = document.getElementById('cartItems');
     const footer = document.getElementById('cartFooter');
     if(cart.length===0) {
       itemsEl.innerHTML = `<div class="text-center py-20 text-gray-600"><div class="text-5xl mb-4">🛒</div><p>Your cart is empty</p></div>`;
-      footer.style.display='none';
-      return;
+      footer.style.display='none'; return;
     }
     footer.style.display='block';
     itemsEl.innerHTML = cart.map(item=>`
@@ -768,115 +684,92 @@
             <button onclick="window.removeFromCart('${item.id}')" class="text-xs text-red-500 hover:text-red-400">Remove</button>
           </div>
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
   }
-
   window.placeOrder = function() {
     if(cart.length===0) return;
-    const lines = cart.map(i => {
-      const imageUrl = i.images && i.images[0] ? `\n  🖼 ${i.images[0]}` : '';
+    const lines = cart.map(i=>{
+      const imageUrl = i.images&&i.images[0]?`\n  🖼 ${i.images[0]}`:'';
       return `• ${i.name} (x${i.qty})${imageUrl}`;
     }).join('\n\n');
     const msg = `Hello Flashgamez Electronics! 👋\n\nI'd like to place an order:\n\n${lines}\n\nPlease send me pricing and availability. Thank you!`;
-    window.open(`https://wa.me/15513502306?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/15513502306?text=${encodeURIComponent(msg)}`,'_blank');
     showToast('Redirecting to WhatsApp...');
   };
 
-  // ===== LIGHTBOX =====
-  window.openLightbox = function(productId, imageIndex) {
-    const p = allProducts.find(x => x.id === productId);
-    if (!p) return;
-    lightboxState.productId = productId;
-    lightboxState.currentIndex = imageIndex;
+  window.openLightbox = function(productId,imageIndex) {
+    const p = allProducts.find(x=>x.id===productId);
+    if(!p) return;
+    lightboxState.productId = productId; lightboxState.currentIndex = imageIndex;
     updateLightboxImage();
     document.getElementById('imageLightbox').classList.add('show');
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow='hidden';
   };
-
   window.closeLightbox = function() {
     document.getElementById('imageLightbox').classList.remove('show');
-    document.body.style.overflow = '';
+    document.body.style.overflow='';
   };
-
   function updateLightboxImage() {
-    const p = allProducts.find(x => x.id === lightboxState.productId);
-    if (!p) return;
+    const p = allProducts.find(x=>x.id===lightboxState.productId);
+    if(!p) return;
     document.getElementById('lightboxImg').src = p.images[lightboxState.currentIndex];
-    document.getElementById('lightboxCounter').textContent = `${lightboxState.currentIndex + 1} / ${p.images.length}`;
+    document.getElementById('lightboxCounter').textContent = `${lightboxState.currentIndex+1} / ${p.images.length}`;
     document.getElementById('lightboxTitle').textContent = p.name;
-    document.getElementById('lightboxPrev').style.display = p.images.length > 1 ? 'flex' : 'none';
-    document.getElementById('lightboxNext').style.display = p.images.length > 1 ? 'flex' : 'none';
+    document.getElementById('lightboxPrev').style.display = p.images.length>1?'flex':'none';
+    document.getElementById('lightboxNext').style.display = p.images.length>1?'flex':'none';
   }
-
   window.lightboxPrev = function() {
-    const p = allProducts.find(x => x.id === lightboxState.productId);
-    if (!p) return;
-    lightboxState.currentIndex = (lightboxState.currentIndex - 1 + p.images.length) % p.images.length;
+    const p = allProducts.find(x=>x.id===lightboxState.productId);
+    if(!p) return;
+    lightboxState.currentIndex = (lightboxState.currentIndex-1+p.images.length)%p.images.length;
     updateLightboxImage();
   };
-
   window.lightboxNext = function() {
-    const p = allProducts.find(x => x.id === lightboxState.productId);
-    if (!p) return;
-    lightboxState.currentIndex = (lightboxState.currentIndex + 1) % p.images.length;
+    const p = allProducts.find(x=>x.id===lightboxState.productId);
+    if(!p) return;
+    lightboxState.currentIndex = (lightboxState.currentIndex+1)%p.images.length;
     updateLightboxImage();
   };
-
   document.addEventListener('keydown', function(e) {
-    if (!document.getElementById('imageLightbox').classList.contains('show')) return;
-    if (e.key === 'Escape') window.closeLightbox();
-    else if (e.key === 'ArrowLeft') window.lightboxPrev();
-    else if (e.key === 'ArrowRight') window.lightboxNext();
+    if(!document.getElementById('imageLightbox').classList.contains('show')) return;
+    if(e.key==='Escape') window.closeLightbox();
+    else if(e.key==='ArrowLeft') window.lightboxPrev();
+    else if(e.key==='ArrowRight') window.lightboxNext();
   });
 
-  // ===== ADMIN LOGIN (Appwrite Auth) =====
   window.openAdminModal = function() { document.getElementById('adminModal').classList.add('show'); };
   window.closeAdminModal = function() {
     document.getElementById('adminModal').classList.remove('show');
     document.getElementById('adminError').classList.add('hidden');
     document.getElementById('adminLoading').classList.add('hidden');
   };
-
   window.doAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPass').value;
     const errEl = document.getElementById('adminError');
     const loadEl = document.getElementById('adminLoading');
     const btnEl = document.getElementById('loginBtn');
-
-    errEl.classList.add('hidden');
-    loadEl.classList.remove('hidden');
-    btnEl.disabled = true;
-    btnEl.textContent = 'Logging in...';
-
+    errEl.classList.add('hidden'); loadEl.classList.remove('hidden');
+    btnEl.disabled=true; btnEl.textContent='Logging in...';
     try {
-      // Delete existing session if any
       try { await account.deleteSession('current'); } catch(e) {}
-      // Create new session
-      await account.createEmailPasswordSession(email, pass);
+      await account.createEmailPasswordSession(email,pass);
       loadEl.classList.add('hidden');
       showToast('✓ Login successful! Redirecting...');
-      setTimeout(() => { window.location.href = 'admin.html'; }, 1000);
-    } catch (err) {
-      loadEl.classList.add('hidden');
-      btnEl.disabled = false;
-      btnEl.textContent = 'Login';
-      errEl.textContent = 'Invalid email or password.';
-      errEl.classList.remove('hidden');
+      setTimeout(()=>{ window.location.href='admin.html'; },1000);
+    } catch(err) {
+      loadEl.classList.add('hidden'); btnEl.disabled=false; btnEl.textContent='Login';
+      errEl.textContent='Invalid email or password.'; errEl.classList.remove('hidden');
     }
   };
 
-  // ===== TOAST =====
   function showToast(msg) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2800);
   }
   window.showToast = showToast;
 
-  // ===== INIT =====
   loadProducts();
 </script>
 </body>
