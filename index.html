@@ -146,6 +146,26 @@
   .lightbox-info { margin-top:20px; text-align:center; color:#8899bb; font-size:14px; }
   .lightbox-counter { color:var(--neon); font-weight:600; margin-right:8px; }
 
+  .review-card {
+    background: var(--card); border: 1px solid var(--border);
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .review-card:hover { border-color: rgba(0,229,255,0.4); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,229,255,0.08); }
+  .review-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, var(--neon), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .review-card:hover::before { opacity: 1; }
+  .star-filled { color: #fbbf24; }
+  .star-empty { color: #374151; }
+  .reviews-track { display: flex; gap: 20px; animation: reviewScroll 50s linear infinite; width: max-content; }
+  .reviews-track:hover { animation-play-state: paused; }
+  @keyframes reviewScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .reviews-fade-left { position:absolute; left:0; top:0; bottom:0; width:80px; background:linear-gradient(to right, var(--dark), transparent); z-index:2; pointer-events:none; }
+  .reviews-fade-right { position:absolute; right:0; top:0; bottom:0; width:80px; background:linear-gradient(to left, var(--dark), transparent); z-index:2; pointer-events:none; }
+
   .admin-btn {
     position: fixed; bottom: 24px; left: 24px; z-index: 50;
     width: 44px; height: 44px; background: rgba(13,20,32,0.9); border: 1px solid var(--border);
@@ -216,6 +236,7 @@
       <a href="#home" class="nav-link">Home</a>
       <a href="#store" class="nav-link">Store</a>
       <a href="#categories" class="nav-link">Categories</a>
+      <a href="#reviews" class="nav-link">Reviews</a>
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <div class="flex items-center gap-4">
@@ -357,10 +378,10 @@
         <div class="font-semibold text-white group-hover:text-cyan-400 transition-colors">+1 872 777 3816</div>
         <div class="text-xs text-gray-600 mt-1">Call or text us</div>
       </a>
-      <a href="mailto:flashgameelectronics@gmail.com" class="product-card p-6 block group">
+      <a href="/cdn-cgi/l/email-protection#26404a47554e41474b43434a4345525449484f455566414b474f4a0845494b" class="product-card p-6 block group">
         <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(255,107,0,0.1);border:1px solid rgba(255,107,0,0.3)">✉️</div>
         <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">Email</div>
-        <div class="font-semibold text-white group-hover:text-orange-400 transition-colors">flashgameelectronics@gmail.com</div>
+        <div class="font-semibold text-white group-hover:text-orange-400 transition-colors"><span class="__cf_email__" data-cfemail="0d6b616c7e656a6c60686861686e797f6263646e7e4d6a606c6461236e6260">[email&#160;protected]</span></div>
         <div class="text-xs text-gray-600 mt-1">Send us an email</div>
       </a>
     </div>
@@ -369,6 +390,51 @@
         <span class="text-xl">📍</span>
         <span>California, USA & China — Shipping worldwide. Contact us for shipping details to your location.</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="py-20" style="background:rgba(0,229,255,0.02)">
+  <div class="max-w-7xl mx-auto px-6 mb-12">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-8 h-px" style="background:var(--neon)"></div>
+      <span class="text-xs tracking-widest" style="color:var(--neon)">CUSTOMER FEEDBACK</span>
+    </div>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <h2 class="section-title text-white">WHAT THEY SAY</h2>
+      <div class="flex items-center gap-4">
+        <div class="text-center">
+          <div class="bebas text-4xl" style="color:var(--neon)">4.9</div>
+          <div class="flex gap-0.5 justify-center">
+            <span class="star-filled text-lg">★</span><span class="star-filled text-lg">★</span><span class="star-filled text-lg">★</span><span class="star-filled text-lg">★</span><span class="star-filled text-lg">★</span>
+          </div>
+          <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Average Rating</div>
+        </div>
+        <div class="w-px h-12" style="background:var(--border)"></div>
+        <div class="text-center">
+          <div class="bebas text-4xl text-white">200+</div>
+          <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Happy Customers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scrolling Reviews Row 1 -->
+  <div class="relative overflow-hidden mb-5">
+    <div class="reviews-fade-left"></div>
+    <div class="reviews-fade-right"></div>
+    <div class="reviews-track" id="reviewsRow1">
+      <!-- Reviews injected by JS -->
+    </div>
+  </div>
+
+  <!-- Scrolling Reviews Row 2 (reverse) -->
+  <div class="relative overflow-hidden">
+    <div class="reviews-fade-left"></div>
+    <div class="reviews-fade-right"></div>
+    <div class="reviews-track" id="reviewsRow2" style="animation-direction:reverse;animation-duration:60s">
+      <!-- Reviews injected by JS -->
     </div>
   </div>
 </section>
@@ -436,7 +502,7 @@
 </button>
 
 <!-- APPWRITE SDK -->
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
   import { Client, Databases, Storage, Account, Query } from 'https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm';
 
   const PROJECT_ID = '69a6c445003bd2ba2780';
@@ -763,13 +829,68 @@
     }
   };
 
+  // ===== TOAST =====
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),2800);
+    setTimeout(()=>t.classList.remove('show'), 3000);
   }
-  window.showToast = showToast;
 
+  // ===== REVIEWS =====
+  const reviews = [
+    { name: "Marcus T.", location: "Lagos, NG", stars: 5, product: "iPhone 15 Pro Max", text: "Absolutely legit! Got my iPhone delivered in perfect condition. The packaging was sealed and everything checked out. Will definitely order again.", avatar: "MT" },
+    { name: "Aisha K.", location: "Accra, GH", stars: 5, product: "Samsung 4K TV", text: "Best deal I could find anywhere. The TV is stunning and Flashgamez kept me updated throughout shipping. 10/10 experience!", avatar: "AK" },
+    { name: "James O.", location: "Nairobi, KE", stars: 5, product: "MacBook Pro M3", text: "Skeptical at first but they delivered exactly what was described. The MacBook is genuine and works perfectly. Customer service was fast on WhatsApp.", avatar: "JO" },
+    { name: "Fatima B.", location: "Dakar, SN", stars: 5, product: "PlayStation 5", text: "My son is thrilled! PS5 arrived brand new in original box. Great price compared to local stores. Highly recommend Flashgamez!", avatar: "FB" },
+    { name: "David N.", location: "Johannesburg, ZA", stars: 5, product: "DJI Drone", text: "The drone arrived faster than expected and works flawlessly. These guys are the real deal. Already recommended them to my whole team.", avatar: "DN" },
+    { name: "Chidi E.", location: "Abuja, NG", stars: 5, product: "Starlink Kit", text: "Couldn't believe the price. Starlink works perfectly since setup. Flashgamez handled all the paperwork and shipping without any issues.", avatar: "CE" },
+    { name: "Priya M.", location: "Mumbai, IN", stars: 5, product: "Sony Camera", text: "The Sony A7 IV is exactly as advertised. Came with all accessories and in mint condition. Great communication throughout the whole process.", avatar: "PM" },
+    { name: "Kevin A.", location: "Kumasi, GH", stars: 5, product: "Bitmain Antminer", text: "Mining rig arrived well-packaged and fully operational. Team walked me through setup on WhatsApp. Solid business partnership here.", avatar: "KA" },
+    { name: "Yemi S.", location: "Ibadan, NG", stars: 5, product: "JBL Speaker Set", text: "Sound quality is insane! Got three JBL speakers and all work perfectly. Flashgamez gave me a bundle deal too. Super happy.", avatar: "YS" },
+    { name: "Lena W.", location: "Berlin, DE", stars: 5, product: "Samsung Galaxy S24", text: "Ordered for my business and everything went smooth. Phone is 100% genuine, unlocked as promised. Response on WhatsApp was instant.", avatar: "LW" },
+    { name: "Emeka I.", location: "Port Harcourt, NG", stars: 5, product: "MSI Gaming Laptop", text: "Bought the MSI Titan GT77 and it's a beast! Arrived sealed. Flashgamez even helped me compare models before I decided. Great service.", avatar: "EI" },
+    { name: "Sofia R.", location: "Lagos, NG", stars: 5, product: "Apple Watch Ultra", text: "Genuine Apple Watch Ultra at an amazing price. Linked to my iPhone immediately. The team was patient with all my questions.", avatar: "SR" },
+    { name: "Kwame D.", location: "Accra, GH", stars: 5, product: "GoPro Hero 12", text: "Perfect for my outdoor adventures. The GoPro came with all original accessories. Shipping was quicker than I expected. Will buy again!", avatar: "KD" },
+    { name: "Tunde A.", location: "Lagos, NG", stars: 5, product: "Xbox Series X", text: "Got it as a birthday gift and the unboxing was perfect. Completely sealed original box. My nephew hasn't put the controller down since!", avatar: "TA" },
+    { name: "Amara D.", location: "Freetown, SL", stars: 5, product: "Garmin Watch", text: "Used it immediately for my marathon training. All sensors work perfectly. Flashgamez customer support stayed in touch even after delivery.", avatar: "AD" },
+    { name: "Carlos M.", location: "Caracas, VE", stars: 5, product: "iPhone 14 Pro", text: "Great experience from start to finish. Phone is fully unlocked and genuine. The price was way better than anything available locally.", avatar: "CM" },
+    { name: "Blessing N.", location: "Enugu, NG", stars: 5, product: "LG OLED TV", text: "The OLED picture quality is breathtaking. Arrived properly crated with zero damage. Flashgamez is the only electronics supplier I trust now.", avatar: "BN" },
+    { name: "Ahmed H.", location: "Cairo, EG", stars: 5, product: "Pioneer DJ Set", text: "Professional DJ equipment delivered to Egypt without issues. Quality is exceptional. This team really knows what they're doing.", avatar: "AH" },
+    { name: "Ngozi O.", location: "Lagos, NG", stars: 5, product: "Nintendo Switch", text: "Bought for my daughter and it was a huge hit. Genuine Nintendo product, everything included. Flashgamez made the process super easy.", avatar: "NO" },
+    { name: "Brian K.", location: "Nairobi, KE", stars: 5, product: "Sonos Sound System", text: "Premium sound system at a great price. Setup was straightforward and the audio quality is phenomenal. Already referring friends to Flashgamez.", avatar: "BK" },
+  ];
+
+  function renderStars(n) {
+    return Array.from({length:5}, (_,i) => `<span class="${i<n?'star-filled':'star-empty'}">★</span>`).join('');
+  }
+
+  function buildReviewCard(r) {
+    return `
+      <div class="review-card p-5 flex-shrink-0" style="width:300px">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:linear-gradient(135deg,rgba(0,229,255,0.2),rgba(255,107,0,0.15));border:1px solid var(--border);color:var(--neon)">${r.avatar}</div>
+          <div>
+            <div class="text-sm font-semibold text-white">${r.name}</div>
+            <div class="text-xs text-gray-600">${r.location}</div>
+          </div>
+        </div>
+        <div class="flex gap-0.5 mb-3 text-sm">${renderStars(r.stars)}</div>
+        <p class="text-gray-400 text-xs leading-relaxed mb-3">"${r.text}"</p>
+        <div class="text-xs font-semibold uppercase tracking-widest" style="color:var(--neon);opacity:0.7">${r.product}</div>
+      </div>`;
+  }
+
+  function renderReviews() {
+    const row1Reviews = reviews.slice(0, 10);
+    const row2Reviews = reviews.slice(10, 20);
+    // Duplicate each row for seamless infinite scroll
+    const row1Html = [...row1Reviews, ...row1Reviews].map(buildReviewCard).join('');
+    const row2Html = [...row2Reviews, ...row2Reviews].map(buildReviewCard).join('');
+    document.getElementById('reviewsRow1').innerHTML = row1Html;
+    document.getElementById('reviewsRow2').innerHTML = row2Html;
+  }
+
+  renderReviews();
   loadProducts();
 </script>
 </body>
