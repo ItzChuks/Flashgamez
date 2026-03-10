@@ -378,10 +378,10 @@
         <div class="font-semibold text-white group-hover:text-cyan-400 transition-colors">+1 872 777 3816</div>
         <div class="text-xs text-gray-600 mt-1">Call or text us</div>
       </a>
-      <a href="/cdn-cgi/l/email-protection#26404a47554e41474b43434a4345525449484f455566414b474f4a0845494b" class="product-card p-6 block group">
+      <a href="mailto:flashgamezelectronics@gmail.com" class="product-card p-6 block group">
         <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(255,107,0,0.1);border:1px solid rgba(255,107,0,0.3)">✉️</div>
         <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">Email</div>
-        <div class="font-semibold text-white group-hover:text-orange-400 transition-colors"><span class="__cf_email__" data-cfemail="0d6b616c7e656a6c60686861686e797f6263646e7e4d6a606c6461236e6260">[email&#160;protected]</span></div>
+        <div class="font-semibold text-white group-hover:text-orange-400 transition-colors">flashgamezelectronics@gmail.com</div>
         <div class="text-xs text-gray-600 mt-1">Send us an email</div>
       </a>
     </div>
@@ -424,18 +424,14 @@
   <div class="relative overflow-hidden mb-5">
     <div class="reviews-fade-left"></div>
     <div class="reviews-fade-right"></div>
-    <div class="reviews-track" id="reviewsRow1">
-      <!-- Reviews injected by JS -->
-    </div>
+    <div class="reviews-track" id="reviewsRow1"></div>
   </div>
 
   <!-- Scrolling Reviews Row 2 (reverse) -->
   <div class="relative overflow-hidden">
     <div class="reviews-fade-left"></div>
     <div class="reviews-fade-right"></div>
-    <div class="reviews-track" id="reviewsRow2" style="animation-direction:reverse;animation-duration:60s">
-      <!-- Reviews injected by JS -->
-    </div>
+    <div class="reviews-track" id="reviewsRow2" style="animation-direction:reverse;animation-duration:60s"></div>
   </div>
 </section>
 
@@ -502,7 +498,7 @@
 </button>
 
 <!-- APPWRITE SDK -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script type="module">
   import { Client, Databases, Storage, Account, Query } from 'https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm';
 
   const PROJECT_ID = '69a6c445003bd2ba2780';
@@ -838,26 +834,35 @@
 
   // ===== REVIEWS =====
   const reviews = [
-    { name: "Marcus T.", location: "Lagos, NG", stars: 5, product: "iPhone 15 Pro Max", text: "Absolutely legit! Got my iPhone delivered in perfect condition. The packaging was sealed and everything checked out. Will definitely order again.", avatar: "MT" },
-    { name: "Aisha K.", location: "Accra, GH", stars: 5, product: "Samsung 4K TV", text: "Best deal I could find anywhere. The TV is stunning and Flashgamez kept me updated throughout shipping. 10/10 experience!", avatar: "AK" },
-    { name: "James O.", location: "Nairobi, KE", stars: 5, product: "MacBook Pro M3", text: "Skeptical at first but they delivered exactly what was described. The MacBook is genuine and works perfectly. Customer service was fast on WhatsApp.", avatar: "JO" },
-    { name: "Fatima B.", location: "Dakar, SN", stars: 5, product: "PlayStation 5", text: "My son is thrilled! PS5 arrived brand new in original box. Great price compared to local stores. Highly recommend Flashgamez!", avatar: "FB" },
-    { name: "David N.", location: "Johannesburg, ZA", stars: 5, product: "DJI Drone", text: "The drone arrived faster than expected and works flawlessly. These guys are the real deal. Already recommended them to my whole team.", avatar: "DN" },
+    // --- NIGERIA (3 only) ---
     { name: "Chidi E.", location: "Abuja, NG", stars: 5, product: "Starlink Kit", text: "Couldn't believe the price. Starlink works perfectly since setup. Flashgamez handled all the paperwork and shipping without any issues.", avatar: "CE" },
-    { name: "Priya M.", location: "Mumbai, IN", stars: 5, product: "Sony Camera", text: "The Sony A7 IV is exactly as advertised. Came with all accessories and in mint condition. Great communication throughout the whole process.", avatar: "PM" },
-    { name: "Kevin A.", location: "Kumasi, GH", stars: 5, product: "Bitmain Antminer", text: "Mining rig arrived well-packaged and fully operational. Team walked me through setup on WhatsApp. Solid business partnership here.", avatar: "KA" },
-    { name: "Yemi S.", location: "Ibadan, NG", stars: 5, product: "JBL Speaker Set", text: "Sound quality is insane! Got three JBL speakers and all work perfectly. Flashgamez gave me a bundle deal too. Super happy.", avatar: "YS" },
-    { name: "Lena W.", location: "Berlin, DE", stars: 5, product: "Samsung Galaxy S24", text: "Ordered for my business and everything went smooth. Phone is 100% genuine, unlocked as promised. Response on WhatsApp was instant.", avatar: "LW" },
+    { name: "Yemi S.", location: "Lagos, NG", stars: 5, product: "JBL Speaker Set", text: "Sound quality is insane! Got three JBL speakers and all work perfectly. Flashgamez gave me a bundle deal too. Super happy.", avatar: "YS" },
     { name: "Emeka I.", location: "Port Harcourt, NG", stars: 5, product: "MSI Gaming Laptop", text: "Bought the MSI Titan GT77 and it's a beast! Arrived sealed. Flashgamez even helped me compare models before I decided. Great service.", avatar: "EI" },
-    { name: "Sofia R.", location: "Lagos, NG", stars: 5, product: "Apple Watch Ultra", text: "Genuine Apple Watch Ultra at an amazing price. Linked to my iPhone immediately. The team was patient with all my questions.", avatar: "SR" },
-    { name: "Kwame D.", location: "Accra, GH", stars: 5, product: "GoPro Hero 12", text: "Perfect for my outdoor adventures. The GoPro came with all original accessories. Shipping was quicker than I expected. Will buy again!", avatar: "KD" },
-    { name: "Tunde A.", location: "Lagos, NG", stars: 5, product: "Xbox Series X", text: "Got it as a birthday gift and the unboxing was perfect. Completely sealed original box. My nephew hasn't put the controller down since!", avatar: "TA" },
-    { name: "Amara D.", location: "Freetown, SL", stars: 5, product: "Garmin Watch", text: "Used it immediately for my marathon training. All sensors work perfectly. Flashgamez customer support stayed in touch even after delivery.", avatar: "AD" },
-    { name: "Carlos M.", location: "Caracas, VE", stars: 5, product: "iPhone 14 Pro", text: "Great experience from start to finish. Phone is fully unlocked and genuine. The price was way better than anything available locally.", avatar: "CM" },
-    { name: "Blessing N.", location: "Enugu, NG", stars: 5, product: "LG OLED TV", text: "The OLED picture quality is breathtaking. Arrived properly crated with zero damage. Flashgamez is the only electronics supplier I trust now.", avatar: "BN" },
-    { name: "Ahmed H.", location: "Cairo, EG", stars: 5, product: "Pioneer DJ Set", text: "Professional DJ equipment delivered to Egypt without issues. Quality is exceptional. This team really knows what they're doing.", avatar: "AH" },
-    { name: "Ngozi O.", location: "Lagos, NG", stars: 5, product: "Nintendo Switch", text: "Bought for my daughter and it was a huge hit. Genuine Nintendo product, everything included. Flashgamez made the process super easy.", avatar: "NO" },
-    { name: "Brian K.", location: "Nairobi, KE", stars: 5, product: "Sonos Sound System", text: "Premium sound system at a great price. Setup was straightforward and the audio quality is phenomenal. Already referring friends to Flashgamez.", avatar: "BK" },
+    // --- USA ---
+    { name: "Tyler B.", location: "Houston, TX, USA", stars: 5, product: "Bitmain Antminer S21", text: "Found Flashgamez through a mining forum and took the leap. Miner arrived fully functional and hashing perfectly. Fast shipping, zero issues.", avatar: "TB" },
+    { name: "Jessica R.", location: "Miami, FL, USA", stars: 5, product: "iPhone 15 Pro Max", text: "Ordered for my business line and it was a seamless experience. Genuine unlocked iPhone, arrived quickly with all accessories. Will order again.", avatar: "JR" },
+    { name: "Marcus W.", location: "Los Angeles, CA, USA", stars: 5, product: "DJI Mavic 3 Pro", text: "Top-tier drone at a price I couldn't find locally. Came in original sealed box, flies great. Customer support was on point via WhatsApp.", avatar: "MW" },
+    // --- CANADA ---
+    { name: "Liam T.", location: "Toronto, ON, Canada", stars: 5, product: "MacBook Pro M3 Max", text: "Got mine faster than expected all the way to Toronto. Genuine Apple product, battery health at 100%. Flashgamez is the real deal.", avatar: "LT" },
+    { name: "Sophie D.", location: "Vancouver, BC, Canada", stars: 5, product: "Samsung 85\" 4K TV", text: "Huge TV delivered safely with professional packaging. Picture quality is incredible. The team answered all my questions before I even ordered.", avatar: "SD" },
+    // --- CHINA ---
+    { name: "Wei L.", location: "Shenzhen, CN", stars: 5, product: "Starlink Kit", text: "Ordered Starlink for a remote project site. Delivered fast and setup was straightforward. Excellent communication from Flashgamez throughout.", avatar: "WL" },
+    { name: "Mei Z.", location: "Shanghai, CN", stars: 5, product: "Canon EOS R5", text: "Professional camera delivered in perfect condition. All accessories included, sensor is spotless. Very happy with the price and service.", avatar: "MZ" },
+    // --- COLOMBIA ---
+    { name: "Andrés M.", location: "Bogotá, CO", stars: 5, product: "PlayStation 5", text: "PS5 arrived brand new in original sealed packaging. My kids went crazy! Great price compared to anything available locally. Highly recommended.", avatar: "AM" },
+    { name: "Valentina R.", location: "Medellín, CO", stars: 5, product: "Apple Watch Ultra 2", text: "Genuine Apple Watch at an unbeatable price. Linked to my iPhone instantly. The team was patient and helpful with every question I had.", avatar: "VR" },
+    // --- ARGENTINA ---
+    { name: "Martín G.", location: "Buenos Aires, AR", stars: 5, product: "Xbox Series X", text: "Ordered as a birthday gift and the unboxing was flawless. Completely sealed original box. Great experience from payment to delivery.", avatar: "MG" },
+    { name: "Lucía F.", location: "Córdoba, AR", stars: 5, product: "Sonos Sound System", text: "Premium sound system with no compromise on quality. Setup was easy and audio is phenomenal. Will definitely refer friends to Flashgamez.", avatar: "LF" },
+    // --- BRAZIL ---
+    { name: "Rafael S.", location: "São Paulo, BR", stars: 5, product: "GoPro Hero 12", text: "Perfect for surf filming. The GoPro came with all original accessories and worked right out of the box. Shipping was faster than expected.", avatar: "RS" },
+    { name: "Camila O.", location: "Rio de Janeiro, BR", stars: 5, product: "Samsung Galaxy S24 Ultra", text: "100% genuine, fully unlocked. Response on WhatsApp was instant and the phone arrived well before the estimated date. Excellent service.", avatar: "CO" },
+    // --- SPAIN ---
+    { name: "Carlos V.", location: "Madrid, ES", stars: 5, product: "Sony A7 IV Camera", text: "The camera arrived in mint condition with all accessories. Great price compared to Spanish retailers. Communication was fast and professional.", avatar: "CV" },
+    { name: "Elena P.", location: "Barcelona, ES", stars: 5, product: "Nintendo Switch OLED", text: "Bought for my daughter and she loves it. Genuine Nintendo product, everything included. Flashgamez made the whole process super easy.", avatar: "EP" },
+    // --- EXTRA INTERNATIONAL ---
+    { name: "Aisha K.", location: "Accra, GH", stars: 5, product: "Samsung 4K TV", text: "Best deal I could find anywhere. The TV is stunning and Flashgamez kept me updated throughout shipping. 10/10 experience!", avatar: "AK" },
+    { name: "Ahmed H.", location: "Cairo, EG", stars: 5, product: "Pioneer DJ Set", text: "Professional DJ equipment delivered to Egypt without any issues. Quality is exceptional. This team really knows what they're doing.", avatar: "AH" },
   ];
 
   function renderStars(n) {
@@ -883,7 +888,6 @@
   function renderReviews() {
     const row1Reviews = reviews.slice(0, 10);
     const row2Reviews = reviews.slice(10, 20);
-    // Duplicate each row for seamless infinite scroll
     const row1Html = [...row1Reviews, ...row1Reviews].map(buildReviewCard).join('');
     const row2Html = [...row2Reviews, ...row2Reviews].map(buildReviewCard).join('');
     document.getElementById('reviewsRow1').innerHTML = row1Html;
