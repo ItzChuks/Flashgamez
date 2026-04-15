@@ -8,155 +8,67 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  :root {
-    --neon: #00e5ff;
-    --neon2: #ff6b00;
-    --dark: #080c14;
-    --card: #0d1420;
-    --border: #1a2540;
-  }
+  :root { --neon: #00e5ff; --neon2: #ff6b00; --dark: #080c14; --card: #0d1420; --border: #1a2540; }
   * { box-sizing: border-box; }
   body { background: var(--dark); color: #e8edf5; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
   .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
-
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
   ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 3px; }
-
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 999; opacity: 0.4;
-  }
-
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; opacity: 0.4; }
   nav { background: rgba(8,12,20,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
   .nav-link { position: relative; color: #8899bb; transition: color 0.3s; font-weight: 500; }
   .nav-link:hover { color: var(--neon); }
   .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--neon); transition:width 0.3s; }
   .nav-link:hover::after { width:100%; }
-
-  .hero-bg {
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,255,0.12) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 40% at 80% 50%, rgba(255,107,0,0.08) 0%, transparent 60%),
-                var(--dark);
-  }
-  .hero-grid {
-    background-image: linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
+  .hero-bg { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,255,0.12) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 50%, rgba(255,107,0,0.08) 0%, transparent 60%), var(--dark); }
+  .hero-grid { background-image: linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px); background-size: 60px 60px; }
   .glitch { position: relative; }
-  .glitch::before, .glitch::after {
-    content: attr(data-text);
-    position: absolute; top: 0; left: 0; width: 100%;
-    font-family: 'Bebas Neue', sans-serif;
-  }
+  .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; font-family: 'Bebas Neue', sans-serif; }
   .glitch::before { color: var(--neon); animation: glitch1 3s infinite; clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); }
   .glitch::after { color: var(--neon2); animation: glitch2 3s infinite; clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
   @keyframes glitch1 { 0%,95%{transform:translate(0)} 96%{transform:translate(-3px,1px)} 97%{transform:translate(3px,-1px)} 98%{transform:translate(0)} }
   @keyframes glitch2 { 0%,95%{transform:translate(0)} 96%{transform:translate(3px,1px)} 97%{transform:translate(-3px,-1px)} 98%{transform:translate(0)} }
-
-  .btn-neon {
-    background: transparent; border: 1.5px solid var(--neon); color: var(--neon);
-    padding: 12px 32px; font-family: 'Outfit', sans-serif; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px;
-    cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    display: inline-block; text-decoration: none;
-  }
+  .btn-neon { background: transparent; border: 1.5px solid var(--neon); color: var(--neon); padding: 12px 32px; font-family: 'Outfit', sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); display: inline-block; text-decoration: none; }
   .btn-neon::before { content:''; position:absolute; inset:0; background:var(--neon); transform:translateX(-101%); transition:transform 0.3s; z-index:-1; }
   .btn-neon:hover { color: var(--dark); box-shadow: 0 0 25px rgba(0,229,255,0.4); }
   .btn-neon:hover::before { transform:translateX(0); }
-
-  .btn-orange {
-    background: var(--neon2); border: none; color: #fff; padding: 12px 32px;
-    font-family: 'Outfit', sans-serif; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; font-size: 13px; cursor: pointer;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    transition: all 0.3s; display: inline-block; text-decoration: none;
-  }
+  .btn-orange { background: var(--neon2); border: none; color: #fff; padding: 12px 32px; font-family: 'Outfit', sans-serif; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; cursor: pointer; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); transition: all 0.3s; display: inline-block; text-decoration: none; }
   .btn-orange:hover { background: #ff8c35; box-shadow: 0 0 25px rgba(255,107,0,0.5); }
-
-  .product-card {
-    background: var(--card); border: 1px solid var(--border);
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-    transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer;
-  }
-  .product-card::before {
-    content:''; position:absolute; inset:0;
-    background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 50%);
-    opacity: 0; transition: opacity 0.3s;
-  }
+  .product-card { background: var(--card); border: 1px solid var(--border); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer; }
+  .product-card::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; }
   .product-card:hover { border-color: var(--neon); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,229,255,0.12); }
   .product-card:hover::before { opacity: 1; }
-
-  .category-badge {
-    background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--neon);
-    font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    padding: 3px 10px; display: inline-block;
-  }
-
-  .cart-panel {
-    position: fixed; right: -420px; top: 0; width: 420px; height: 100vh;
-    background: #0a0f1c; border-left: 1px solid var(--border);
-    z-index: 200; transition: right 0.4s cubic-bezier(0.77,0,0.18,1);
-    display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-  }
+  .category-badge { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--neon); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
+  .cart-panel { position: fixed; right: -420px; top: 0; width: 420px; height: 100vh; background: #0a0f1c; border-left: 1px solid var(--border); z-index: 200; transition: right 0.4s cubic-bezier(0.77,0,0.18,1); display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.5); }
   .cart-panel.open { right: 0; }
   .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:199; display:none; }
   .cart-overlay.show { display:block; }
-
   .img-slider { position: relative; overflow: hidden; }
   .img-slides { display: flex; transition: transform 0.4s ease; }
   .img-slides img { width:100%; flex-shrink:0; object-fit:cover; }
   .slide-dot { width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.3); cursor:pointer; transition:all 0.2s; }
   .slide-dot.active { background: var(--neon); width:20px; border-radius:4px; }
-
   .modal { position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center; padding:20px; }
   .modal.show { display:flex; }
   .modal-bg { position:absolute; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); }
-  .modal-content {
-    position:relative; z-index:1; background:var(--card); border:1px solid var(--border);
-    max-width:680px; width:100%; max-height:90vh; overflow-y:auto;
-    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-  }
-
+  .modal-content { position:relative; z-index:1; background:var(--card); border:1px solid var(--border); max-width:680px; width:100%; max-height:90vh; overflow-y:auto; clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
   .lightbox { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; padding:20px; }
   .lightbox.show { display:flex; }
   .lightbox-bg { position:absolute; inset:0; background:rgba(0,0,0,0.95); backdrop-filter:blur(20px); }
   .lightbox-content { position:relative; z-index:1; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center; }
   .lightbox-img { max-width:100%; max-height:80vh; object-fit:contain; border:2px solid var(--border); box-shadow: 0 20px 80px rgba(0,229,255,0.2); }
-  .lightbox-nav {
-    position:absolute; top:50%; transform:translateY(-50%); width:50px; height:50px;
-    background:rgba(13,20,32,0.9); border:1px solid var(--border); border-radius:50%;
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
-    color:#8899bb; font-size:24px; transition:all 0.3s; z-index:2;
-  }
+  .lightbox-nav { position:absolute; top:50%; transform:translateY(-50%); width:50px; height:50px; background:rgba(13,20,32,0.9); border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8899bb; font-size:24px; transition:all 0.3s; z-index:2; }
   .lightbox-nav:hover { border-color:var(--neon); color:var(--neon); }
   .lightbox-nav.prev { left:20px; }
   .lightbox-nav.next { right:20px; }
-  .lightbox-close {
-    position:absolute; top:20px; right:20px; width:50px; height:50px;
-    background:rgba(13,20,32,0.9); border:1px solid var(--border); border-radius:50%;
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
-    color:#8899bb; font-size:28px; transition:all 0.3s; z-index:2;
-  }
+  .lightbox-close { position:absolute; top:20px; right:20px; width:50px; height:50px; background:rgba(13,20,32,0.9); border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8899bb; font-size:28px; transition:all 0.3s; z-index:2; }
   .lightbox-close:hover { border-color:var(--neon2); color:var(--neon2); }
   .lightbox-info { margin-top:20px; text-align:center; color:#8899bb; font-size:14px; }
   .lightbox-counter { color:var(--neon); font-weight:600; margin-right:8px; }
-
-  .review-card {
-    background: var(--card); border: 1px solid var(--border);
-    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-    transition: all 0.3s; position: relative; overflow: hidden;
-  }
+  .review-card { background: var(--card); border: 1px solid var(--border); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); transition: all 0.3s; position: relative; overflow: hidden; }
   .review-card:hover { border-color: rgba(0,229,255,0.4); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,229,255,0.08); }
-  .review-card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:2px;
-    background: linear-gradient(90deg, var(--neon), transparent);
-    opacity: 0; transition: opacity 0.3s;
-  }
+  .review-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--neon), transparent); opacity: 0; transition: opacity 0.3s; }
   .review-card:hover::before { opacity: 1; }
   .star-filled { color: #fbbf24; }
   .star-empty { color: #374151; }
@@ -165,32 +77,17 @@
   @keyframes reviewScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .reviews-fade-left { position:absolute; left:0; top:0; bottom:0; width:80px; background:linear-gradient(to right, var(--dark), transparent); z-index:2; pointer-events:none; }
   .reviews-fade-right { position:absolute; right:0; top:0; bottom:0; width:80px; background:linear-gradient(to left, var(--dark), transparent); z-index:2; pointer-events:none; }
-
-  .admin-btn {
-    position: fixed; bottom: 24px; left: 24px; z-index: 50;
-    width: 44px; height: 44px; background: rgba(13,20,32,0.9); border: 1px solid var(--border);
-    border-radius: 50%; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:all 0.3s; color: #445577; font-size:16px;
-  }
+  .admin-btn { position: fixed; bottom: 24px; left: 24px; z-index: 50; width: 44px; height: 44px; background: rgba(13,20,32,0.9); border: 1px solid var(--border); border-radius: 50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.3s; color: #445577; font-size:16px; }
   .admin-btn:hover { border-color: var(--neon2); color: var(--neon2); }
-
   .section-title { font-family:'Bebas Neue',sans-serif; font-size: clamp(36px,6vw,72px); letter-spacing:0.02em; line-height:1; }
-
   .toast { position:fixed; bottom:24px; right:24px; z-index:400; background:var(--card); border:1px solid var(--neon); color:#fff; padding:14px 20px; font-size:14px; transform:translateX(140%); transition:transform 0.4s; border-left:3px solid var(--neon); }
   .toast.show { transform:translateX(0); }
-
   .ticker-track { display:flex; gap:60px; animation: ticker 35s linear infinite; white-space:nowrap; }
   @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-
   .cart-item-img { width:64px; height:64px; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
-
   .skeleton { background: linear-gradient(90deg, var(--card) 25%, #131d2e 50%, var(--card) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
   @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-
-  @media(max-width:640px) {
-    .cart-panel { width:100%; right:-100%; }
-    .cart-panel.open { right:0; }
-  }
+  @media(max-width:640px) { .cart-panel { width:100%; right:-100%; } .cart-panel.open { right:0; } }
 </style>
 </head>
 <body>
@@ -301,13 +198,15 @@
       <span>PlayStation 5</span><span>•</span><span>Xbox Series X</span><span>•</span><span>Nintendo Switch</span><span>•</span>
       <span>Apple Watch</span><span>•</span><span>Garmin Watch</span><span>•</span><span>Sonos Speaker</span><span>•</span>
       <span>Electric Bike</span><span>•</span><span>Mountain Bike</span><span>•</span><span>Yamaha Outboard</span><span>•</span><span>Honda Outboard</span><span>•</span>
+      <span>Autos</span><span>•</span><span>Motorcycles</span><span>•</span>
       <span>iPhone</span><span>•</span><span>Samsung Galaxy</span><span>•</span><span>Google Pixel</span><span>•</span>
       <span>MacBook</span><span>•</span><span>MSI Gaming</span><span>•</span><span>JBL Speakers</span><span>•</span>
       <span>Samsung Smart TV</span><span>•</span><span>LG Smart TV</span><span>•</span><span>Bitmain Antminer</span><span>•</span>
       <span>Starlink</span><span>•</span><span>Canon Camera</span><span>•</span><span>GoPro Hero</span><span>•</span><span>Pioneer DJ</span><span>•</span>
       <span>PlayStation 5</span><span>•</span><span>Xbox Series X</span><span>•</span><span>Nintendo Switch</span><span>•</span>
       <span>Apple Watch</span><span>•</span><span>Garmin Watch</span><span>•</span><span>Sonos Speaker</span><span>•</span>
-      <span>Electric Bike</span><span>•</span><span>Mountain Bike</span><span>•</span><span>Yamaha Outboard</span><span>•</span><span>Honda Outboard</span>
+      <span>Electric Bike</span><span>•</span><span>Mountain Bike</span><span>•</span><span>Yamaha Outboard</span><span>•</span><span>Honda Outboard</span><span>•</span>
+      <span>Autos</span><span>•</span><span>Motorcycles</span>
     </div>
   </div>
 </div>
@@ -369,13 +268,13 @@
       <a href="https://wa.me/15513502306" target="_blank" class="product-card p-6 block group">
         <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3)">📱</div>
         <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">WhatsApp</div>
-        <div class="font-semibold text-white group-hover:text-green-400 transition-colors">+1 551 350 2306</div>
+        <div class="font-semibold text-white group-hover:text-green-400 transition-colors">+1 551 350 2306, +1 980 380 2090</div>
         <div class="text-xs text-gray-600 mt-1">Chat with us instantly</div>
       </a>
       <a href="tel:+18727773816" class="product-card p-6 block group">
         <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.3)">📞</div>
         <div class="text-xs tracking-widest text-gray-500 uppercase mb-1">Call / Text</div>
-        <div class="font-semibold text-white group-hover:text-cyan-400 transition-colors">+1 872 777 3816</div>
+        <div class="font-semibold text-white group-hover:text-cyan-400 transition-colors">+1 980 380 2090</div>
         <div class="text-xs text-gray-600 mt-1">Call or text us</div>
       </a>
       <a href="mailto:flashgamezelectronics@gmail.com" class="product-card p-6 block group">
@@ -419,15 +318,11 @@
       </div>
     </div>
   </div>
-
-  <!-- Scrolling Reviews Row 1 -->
   <div class="relative overflow-hidden mb-5">
     <div class="reviews-fade-left"></div>
     <div class="reviews-fade-right"></div>
     <div class="reviews-track" id="reviewsRow1"></div>
   </div>
-
-  <!-- Scrolling Reviews Row 2 (reverse) -->
   <div class="relative overflow-hidden">
     <div class="reviews-fade-left"></div>
     <div class="reviews-fade-right"></div>
@@ -512,7 +407,7 @@
   const storage = new Storage(client);
   const account = new Account(client);
 
-  // ===== CATEGORIES (13 total) =====
+  // ===== CATEGORIES (15 total) =====
   const categories = [
     { id: 'smartphones',  name: 'Smartphones',      icon: '📱', color: 'var(--neon)' },
     { id: 'tvs',          name: 'Smart TVs',         icon: '📺', color: 'var(--neon2)' },
@@ -527,6 +422,8 @@
     { id: 'speakers',     name: 'Speakers',          icon: '🔈', color: '#ec4899' },
     { id: 'bikes',        name: 'Bikes',             icon: '🚲', color: '#84cc16' },
     { id: 'engines',      name: 'Outboard Engines',  icon: '⚙️', color: '#f97316' },
+    { id: 'autos',        name: 'Autos',             icon: '🚗', color: '#3b82f6' },
+    { id: 'motorcycles',  name: 'Motorcycles',       icon: '🏍️', color: '#e11d48' },
   ];
 
   let allProducts = [];
@@ -604,7 +501,6 @@
         ? `<span style="color:var(--neon)">Found ${filtered.length} result${filtered.length!==1?'s':''}</span> for "<span class="text-white">${searchQuery}</span>"`
         : `No results for "<span class="text-white">${searchQuery}</span>"`;
     } else { meta.classList.add('hidden'); }
-
     if (filtered.length === 0) {
       grid.innerHTML = `<div class="col-span-full text-center py-20"><div class="text-5xl mb-4">🔍</div><p class="text-gray-500 mb-2">No products found</p><button onclick="window.clearSearch()" class="text-xs mt-2 underline" style="color:var(--neon)">Clear search</button></div>`;
       return;
@@ -699,7 +595,6 @@
     document.querySelectorAll(`[id^="mdot-${productId}-"]`).forEach((d,i)=>d.classList.toggle('active',i===index));
   };
   window.closeModal = function() { document.getElementById('productModal').classList.remove('show'); };
-
   window.toggleCart = function() {
     document.getElementById('cartPanel').classList.toggle('open');
     document.getElementById('cartOverlay').classList.toggle('show');
@@ -758,7 +653,6 @@
     window.open(`https://wa.me/15513502306?text=${encodeURIComponent(msg)}`,'_blank');
     showToast('Redirecting to WhatsApp...');
   };
-
   window.openLightbox = function(productId,imageIndex) {
     const p = allProducts.find(x=>x.id===productId);
     if(!p) return;
@@ -798,7 +692,6 @@
     else if(e.key==='ArrowLeft') window.lightboxPrev();
     else if(e.key==='ArrowRight') window.lightboxNext();
   });
-
   window.openAdminModal = function() { document.getElementById('adminModal').classList.add('show'); };
   window.closeAdminModal = function() {
     document.getElementById('adminModal').classList.remove('show');
@@ -824,51 +717,36 @@
       errEl.textContent='Invalid email or password.'; errEl.classList.remove('hidden');
     }
   };
-
-  // ===== TOAST =====
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'), 3000);
   }
-
-  // ===== REVIEWS =====
   const reviews = [
-    // --- NIGERIA (3 only) ---
     { name: "Chidi E.", location: "Abuja, NG", stars: 5, product: "Starlink Kit", text: "Couldn't believe the price. Starlink works perfectly since setup. Flashgamez handled all the paperwork and shipping without any issues.", avatar: "CE" },
     { name: "Joe S.", location: "Texas, US", stars: 5, product: "JBL Speaker Set", text: "Sound quality is insane! Got three JBL speakers and all work perfectly. Flashgamez gave me a bundle deal too. Super happy.", avatar: "YS" },
     { name: "John D.", location: "LA, US", stars: 5, product: "MSI Gaming Laptop", text: "Bought the MSI Titan GT77 and it's a beast! Arrived sealed. Flashgamez even helped me compare models before I decided. Great service.", avatar: "EI" },
-    // --- USA ---
     { name: "Tyler B.", location: "Houston, TX, USA", stars: 5, product: "Bitmain Antminer S21", text: "Found Flashgamez through a mining forum and took the leap. Miner arrived fully functional and hashing perfectly. Fast shipping, zero issues.", avatar: "TB" },
     { name: "Jessica R.", location: "Miami, FL, USA", stars: 5, product: "iPhone 15 Pro Max", text: "Ordered for my business line and it was a seamless experience. Genuine unlocked iPhone, arrived quickly with all accessories. Will order again.", avatar: "JR" },
     { name: "Marcus W.", location: "Los Angeles, CA, USA", stars: 5, product: "DJI Mavic 3 Pro", text: "Top-tier drone at a price I couldn't find locally. Came in original sealed box, flies great. Customer support was on point via WhatsApp.", avatar: "MW" },
-    // --- CANADA ---
     { name: "Liam T.", location: "Toronto, ON, Canada", stars: 5, product: "MacBook Pro M3 Max", text: "Got mine faster than expected all the way to Toronto. Genuine Apple product, battery health at 100%. Flashgamez is the real deal.", avatar: "LT" },
     { name: "Sophie D.", location: "Vancouver, BC, Canada", stars: 5, product: "Samsung 85\" 4K TV", text: "Huge TV delivered safely with professional packaging. Picture quality is incredible. The team answered all my questions before I even ordered.", avatar: "SD" },
-    // --- CHINA ---
     { name: "Wei L.", location: "Shenzhen, CN", stars: 5, product: "Starlink Kit", text: "Ordered Starlink for a remote project site. Delivered fast and setup was straightforward. Excellent communication from Flashgamez throughout.", avatar: "WL" },
     { name: "Mei Z.", location: "Shanghai, CN", stars: 5, product: "Canon EOS R5", text: "Professional camera delivered in perfect condition. All accessories included, sensor is spotless. Very happy with the price and service.", avatar: "MZ" },
-    // --- COLOMBIA ---
     { name: "Andrés M.", location: "Bogotá, CO", stars: 5, product: "PlayStation 5", text: "PS5 arrived brand new in original sealed packaging. My kids went crazy! Great price compared to anything available locally. Highly recommended.", avatar: "AM" },
     { name: "Valentina R.", location: "Medellín, CO", stars: 5, product: "Apple Watch Ultra 2", text: "Genuine Apple Watch at an unbeatable price. Linked to my iPhone instantly. The team was patient and helpful with every question I had.", avatar: "VR" },
-    // --- ARGENTINA ---
     { name: "Martín G.", location: "Buenos Aires, AR", stars: 5, product: "Xbox Series X", text: "Ordered as a birthday gift and the unboxing was flawless. Completely sealed original box. Great experience from payment to delivery.", avatar: "MG" },
     { name: "Lucía F.", location: "Córdoba, AR", stars: 5, product: "Sonos Sound System", text: "Premium sound system with no compromise on quality. Setup was easy and audio is phenomenal. Will definitely refer friends to Flashgamez.", avatar: "LF" },
-    // --- BRAZIL ---
     { name: "Rafael S.", location: "São Paulo, BR", stars: 5, product: "GoPro Hero 12", text: "Perfect for surf filming. The GoPro came with all original accessories and worked right out of the box. Shipping was faster than expected.", avatar: "RS" },
     { name: "Camila O.", location: "Rio de Janeiro, BR", stars: 5, product: "Samsung Galaxy S24 Ultra", text: "100% genuine, fully unlocked. Response on WhatsApp was instant and the phone arrived well before the estimated date. Excellent service.", avatar: "CO" },
-    // --- SPAIN ---
     { name: "Carlos V.", location: "Madrid, ES", stars: 5, product: "Sony A7 IV Camera", text: "The camera arrived in mint condition with all accessories. Great price compared to Spanish retailers. Communication was fast and professional.", avatar: "CV" },
     { name: "Elena P.", location: "Barcelona, ES", stars: 5, product: "Nintendo Switch OLED", text: "Bought for my daughter and she loves it. Genuine Nintendo product, everything included. Flashgamez made the whole process super easy.", avatar: "EP" },
-    // --- EXTRA INTERNATIONAL ---
     { name: "Aisha K.", location: "Accra, GH", stars: 5, product: "Samsung 4K TV", text: "Best deal I could find anywhere. The TV is stunning and Flashgamez kept me updated throughout shipping. 10/10 experience!", avatar: "AK" },
     { name: "Ahmed H.", location: "Cairo, EG", stars: 5, product: "Pioneer DJ Set", text: "Professional DJ equipment delivered to Egypt without any issues. Quality is exceptional. This team really knows what they're doing.", avatar: "AH" },
   ];
-
   function renderStars(n) {
     return Array.from({length:5}, (_,i) => `<span class="${i<n?'star-filled':'star-empty'}">★</span>`).join('');
   }
-
   function buildReviewCard(r) {
     return `
       <div class="review-card p-5 flex-shrink-0" style="width:300px">
@@ -884,7 +762,6 @@
         <div class="text-xs font-semibold uppercase tracking-widest" style="color:var(--neon);opacity:0.7">${r.product}</div>
       </div>`;
   }
-
   function renderReviews() {
     const row1Reviews = reviews.slice(0, 10);
     const row2Reviews = reviews.slice(10, 20);
@@ -893,7 +770,6 @@
     document.getElementById('reviewsRow1').innerHTML = row1Html;
     document.getElementById('reviewsRow2').innerHTML = row2Html;
   }
-
   renderReviews();
   loadProducts();
 </script>
