@@ -392,6 +392,9 @@
   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
 </button>
 
+<!-- CATEGORIES LIST -->
+<script src="categories.js"></script>
+
 <!-- APPWRITE SDK -->
 <script type="module">
   import { Client, Databases, Storage, Account, Query } from 'https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm';
@@ -424,6 +427,7 @@
     { id: 'engines',      name: 'Outboard Engines',  icon: '⚙️', color: '#f97316' },
     { id: 'autos',        name: 'Autos',             icon: '🚗', color: '#3b82f6' },
     { id: 'motorcycles',  name: 'Motorcycles',       icon: '🏍️', color: '#e11d48' },
+    { id: 'dj-studio',   name: 'DJ & Studio',       icon: '🎚️', color: '#7c3aed' },
   ];
 
   let allProducts = [];
